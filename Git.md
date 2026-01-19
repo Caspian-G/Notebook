@@ -6,7 +6,9 @@
 
 .gitignore  //按具体项目和个人需要编写
 
-```git add 文件路径```
+```git add 文件路径```  //在commit之后会清空
+
+```git status```  //查看状态
 
 ```git commit -m "description"```  //提交到本地.git文件夹下
 
