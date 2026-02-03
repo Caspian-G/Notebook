@@ -44,6 +44,8 @@
 
 ######  如果提示冲突可强制覆盖
 
+```git fetch --all```
+
 ```git reset --hard origin/main```
 
 ###### 或
