@@ -1,4 +1,4 @@
-## Git 命令
+# Git 命令
 
 #### 初始化
 
@@ -43,6 +43,7 @@
 ```git pull origin main```  //"git fetch"和"git merge"的组合 git merge将更新合并到工作目录
 
 ######  如果提示冲突可强制覆盖
+```git fetch --all```
 
 ```git fetch --all```
 
