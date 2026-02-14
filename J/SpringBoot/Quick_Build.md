@@ -88,7 +88,7 @@ private Environment env;
 ```
 Person.java:
 @Component
-@ConfigurationProperties
+@ConfigurationProperties("map名")  //()内的内容可指定.yaml文件中的具体map
 public class Person{} //需与代取内容同名的成员变量及其getter和setter
 ```
 
