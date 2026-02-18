@@ -9,6 +9,8 @@ public class Application{
 }
 ```
 
+**注** 统一加入注解方式 例@Mapper @MapperScan("com.example.demo.mapper")  // 扫描整个包
+
 #### Controller
 
 ```
@@ -48,6 +50,10 @@ DemoController.java: `public String ...(Model model){ model.addAttribute("...", 
 #### Service
 
 ```
+@Service
+public class UserService{
+	...;
+}
 ```
 
 **注** 注解与类名不可相同 包引用时会冲突

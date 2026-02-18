@@ -8,6 +8,7 @@
 
 ```
 <parent> spring-boot-starter-parent //定义各技术版本信息
+<version> 3.3.0
 ```
 
 ```
