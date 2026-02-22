@@ -1,6 +1,6 @@
 # MVVM架构
 
-#### MainActivity.java
+#### view.MainActivity.java
 
 ```
 public class MainActivity extends AppCompatActivity {
@@ -16,6 +16,16 @@ public class MainActivity extends AppCompatActivity {
 			return insets;
 		});
 	}
+}
+```
+
+#### model.entities.Entity.java
+
+```
+public class Entity{
+	private Object ...;
+	...getter&setter;
+	...toString();
 }
 ```
 
