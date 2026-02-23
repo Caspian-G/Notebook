@@ -29,3 +29,13 @@ public class Entity{
 }
 ```
 
+#### res资源文件夹
+
+**注** R: res文件夹
+
+res\drawable 图片等
+
+res\raw           视频等
+
+res\layout       xml布局文件
+
