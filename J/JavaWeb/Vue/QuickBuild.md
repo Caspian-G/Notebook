@@ -1,5 +1,7 @@
 # QuickBuild
 
+**注** F12调出浏览器控制台可查看报错
+
 #### Vue3文档
 
 https://cn.vuejs.org/guide/quick-start.html
@@ -50,16 +52,18 @@ https://cn.vuejs.org/guide/quick-start.html
     </div>
     <script type="module">  //声明模块化类型
         import {createApp} from "./vue.esm-browser.js"  //使用局部构建版本Vue
-    	createApp{  //这里因为之前的import不用写"Vue."
+    	createApp({  //这里因为之前的import不用写"Vue."
             setup(){
                 return{
                     msg: "success"
                 }
             }
-        }.mount("#app")
+        }).mount("#app")
     </script>
 </body>
 ```
 
 **注** 使用ES模块构建版本 在我们通过本地盘符的路径打开html时是不会有渲染效果的 只有在服务器形态下才能成功渲染
+
+**注** 若使用SpringBoot templates依赖 js文件需放入static文件夹 templates文件夹无法被浏览器直接请求并访问 import路径保持"./vue.esm-browser.js"
 
