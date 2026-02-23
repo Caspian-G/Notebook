@@ -10,6 +10,7 @@
     //请求使用权限
     <uses-permission android:name="android.permission.INTERNET" />  //网络权限
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>  //读取本地存储权限
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>  //写入本地存储权限
     <application
         //备份
         android:allowBackup="true"  //允许系统备份应用数据

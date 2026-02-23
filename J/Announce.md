@@ -29,3 +29,9 @@ public class DemoSon extends DemoFather{
 #### 项目name修改
 
 项目结构中项目名修改+本地磁盘下项目名修改
+
+#### 经典https测试视频
+
+```
+"http://vjs.zencdn.net/v/oceans.mp4"
+```
