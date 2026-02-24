@@ -78,7 +78,8 @@ match_parent 占满父母
 ```
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -89,16 +90,17 @@ match_parent 占满父母
             android:layout_height="wrap_content"
             android:text="..."
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+        </TextView>
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="..."/>
-        />
+    </ScrollView>
 </LinearLayout>
 ```
 
