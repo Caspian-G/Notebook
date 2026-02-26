@@ -53,7 +53,7 @@ DemoController.java: `public String ...(Model model){ model.addAttribute("...", 
 
 ```
 @GetMapping("/api/user")
-public String getUser(@RequestParam(value = "id", defaultValue = "1") String id,
+public String getUser(@RequestParam(value = "id", defaultValue = "1") String id,  //这里的value是key defaultValue是key的默认赋值也就是默认key的默认值
                       @RequestParam(value = "name", required = false) String name)  //required指定是否必须存在
 {
     // 访问：/api/user?id=123&name=张三

@@ -1,6 +1,6 @@
 # MVVM架构
 
-#### view.MainActivity.java
+#### presentation.view.MainActivity.java
 
 ```
 public class MainActivity extends AppCompatActivity {
@@ -17,6 +17,12 @@ public class MainActivity extends AppCompatActivity {
 		});
 	}
 }
+```
+
+#### presentation.adapter.MainAdapter.java
+
+```
+
 ```
 
 #### model.entities.Entity.java

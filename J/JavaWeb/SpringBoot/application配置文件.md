@@ -25,7 +25,7 @@ spring:
     static-path-pattern: /videos/**
 ```
 
-#### 法二 WebConfig配置类
+##### 法二 WebConfig配置类
 
 ```
 @Configuration
