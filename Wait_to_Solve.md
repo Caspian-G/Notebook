@@ -11,3 +11,7 @@ py lambda
 java构造方法自动生成机制
 
 添加公网的popupmenu
+
+ai算法插帧
+
+判断getPathMenu返回空

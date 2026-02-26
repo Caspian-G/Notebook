@@ -35,3 +35,12 @@ public class DemoSon extends DemoFather{
 ```
 "http://vjs.zencdn.net/v/oceans.mp4"
 ```
+
+#### 使用正则表达式分割字符
+
+```
+String[] newPath = path.split("/");
+```
+
+
+

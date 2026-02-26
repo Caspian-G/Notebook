@@ -47,6 +47,36 @@ return "hello.html"  //return只在static文件夹下查找资源
 
 DemoController.java: `public String ...(Model model){ model.addAttribute("...", ...); return "....html"; }`
 
+##### 参数获取方式
+
+###### 法一 @RequestParam
+
+```
+@GetMapping("/api/user")
+public String getUser(@RequestParam(value = "id", defaultValue = "1") String id,
+                      @RequestParam(value = "name", required = false) String name)  //required指定是否必须存在
+{
+    // 访问：/api/user?id=123&name=张三
+    return "用户ID：" + id + "，姓名：" + name;
+}
+```
+
+###### 法二  @PathVariable
+
+```
+@GetMapping("/api/user/{id}")
+public String getUserById(@PathVariable String id) {
+    // 访问：/api/user/123
+    return "用户ID：" + id;
+}
+// 多个路径变量
+@GetMapping("/api/user/{userId}/order/{orderId}")
+public String getUserOrder(@PathVariable String userId, 
+                          @PathVariable String orderId) {
+    return "用户：" + userId + "，订单：" + orderId;
+}
+```
+
 #### Service
 
 ```
