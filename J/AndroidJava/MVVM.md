@@ -5,7 +5,7 @@
 ```
 public class MainActivity extends AppCompatActivity {
 	@Override
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState){  //在生命周期只运行一次
 		super.onCreate(savedInstanceState);  //调用父类onCreate方法
 		EdgeToEdge.enable(this);  //实现全面屏
 		setContentView(R.layout.activity_main);  //加载xml布局文件
@@ -19,10 +19,62 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
+**注** onCreate运行系统创建了按钮 你告诉系统“把这个 Lambda 表达式（那个 ->里的代码）存到这个按钮的"小本本"里 onCreate运行结束功成身退 虽然 onCreate跑完了 但按钮的"小本本""还在内存里
+
 #### presentation.adapter.MainAdapter.java
 
 ```
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> {
+    private List<String> fileList;
+    private OnItemClickListener listener;
+    // 定义点击回调接口
+    public interface OnItemClickListener {
+        void onItemClick(String fileName);
+    }
+	//构造函数
+    public MainAdapter(List<String> fileList, OnItemClickListener listener) {
+        this.fileList = fileList;
+        this.listener = listener;
+    }
+    @NonNull
+    @Override
+    public MainViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // 加载布局并创建 ViewHolder
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_file, parent, false);
+        return new MainViewHolder(view);
+    }
+    @Override
+    public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
+        // 绑定数据
+        String fileName = fileList.get(position);
+        holder.tvFileTitle.setText(fileName);
 
+        // 设置点击事件
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) listener.onItemClick(fileName);
+        });
+    }
+	//获取列表长度
+    @Override
+    public int getItemCount() {
+        return fileList.size();
+    }
+    // 更新数据的方法(可选)
+    public void updateData(List<String> newList) {
+        this.fileList = newList;
+        notifyDataSetChanged();
+    }
+    // ViewHolder：内部类，用来缓存控件
+    static class MainViewHolder extends RecyclerView.ViewHolder {
+        TextView tvFileTitle;
+        ImageView ivIcon;
+        public MainViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvFileTitle = itemView.findViewById(R.id.list_file_title);
+            ivIcon = itemView.findViewById(R.id.list_file_icon);
+        }
+    }
+}
 ```
 
 #### model.entities.Entity.java

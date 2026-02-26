@@ -2,7 +2,7 @@ ioc di aop pojo
 
 git 批处理
 
-py lambda
+py java lambda
 
 
 
@@ -14,4 +14,4 @@ java构造方法自动生成机制
 
 ai算法插帧
 
-判断getPathMenu返回空
+允许界面翻转点击返回空

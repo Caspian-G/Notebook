@@ -33,7 +33,7 @@ public interface ApiService {
 }
 ```
 
-#### ViewModel中编写LiveData容器同时调用接口
+#### ViewModel中编写LiveData容器 同时调用接口
 
 ```
 public class VlViewModel extends ViewModel {
@@ -62,5 +62,13 @@ public class VlViewModel extends ViewModel {
         });
     }
 }
+```
+
+#### Activity类
+
+```
+vlViewModel.getPathMenuData().observe(this, newList->{
+    if(newList != null) mainAdapter.updateData(newList);
+});
 ```
 

@@ -23,6 +23,8 @@
         //定义用户能看到的界面
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"  //固定为竖屏 landscape-横屏
+            android:configChanges="orientation|screenSize|keyboardHidden"  //不重启但允许旋转
             android:exported="true">  //声明系统有权启动这个界面(如果需将该页作为启动页需true)
             //启动意图
             <intent-filter>
@@ -34,6 +36,19 @@
     </application>
 
 </manifest>
+```
+
+###### 屏幕方向固定 法二 java代码
+
+```
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    // 强制设置为竖屏/横屏
+    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    // 恢复为根据传感器自动旋转（前提是用户的系统开启了“自动旋转”）
+	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+}
 ```
 
 #### activity_main.xml
@@ -377,6 +392,17 @@ String text = ....getText().toString();
 
 ```
 Toast.makeText(this, "...", Toast.LENGTH_SHORT).show();
+//使用Toast的Tips
+//老式匿名内部类写法 lambda写法无此问题
+vlViewModel.getErrorLiveData().observe(this, new Observer<String>() {
+    @Override
+    public void onChanged(String error) {
+        //报错 这里的this指向的是这个匿名的Observer对象
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show(); 
+        //必须这样写
+        Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
+    }
+});
 ```
 
 ##### 从其它页面获取数据至main
@@ -388,5 +414,130 @@ static方式 (无法保持数据持久化)
 public static Text currentText;
 //OtherActivity
 MainActivity.currentText = text;
+```
+
+#### 采用RecyclerView实现动态且滚动窗口
+
+添加依赖
+
+```
+implementation("androidx.recyclerview:recyclerview:1.2.1")
+```
+
+编写局部窗口结构定义文件
+
+```
+//list_file.xml  单独的xml文件用于定义每一行长什么样
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="40dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:id="@+id/list_file_icon"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+    </ImageView>
+    <TextView
+        android:id="@+id/list_file_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text=""
+        android:textSize="15sp"
+        android:gravity="center_vertical">
+    </TextView>
+</LinearLayout>
+
+//activity_main.xml
+<androidx.recyclerview.widget.RecyclerView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/list_file"
+    android:visibility="gone">
+</androidx.recyclerview.widget.RecyclerView>
+```
+
+编写适配器
+
+```
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> {
+    private List<String> fileList;
+    private OnItemClickListener listener;
+    // 定义点击回调接口
+    public interface OnItemClickListener {
+        void onItemClick(String fileName);
+    }
+	//构造函数
+    public MainAdapter(List<String> fileList, OnItemClickListener listener) {
+        this.fileList = fileList;
+        this.listener = listener;
+    }
+    @NonNull
+    @Override
+    public MainViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // 加载布局并创建 ViewHolder
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_file, parent, false);
+        return new MainViewHolder(view);
+    }
+    @Override
+    public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {  //主要在此添加样式
+        // 绑定数据
+        String fileName = fileList.get(position);
+        holder.tvFileTitle.setText(fileName);
+
+        // 设置点击事件
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) listener.onItemClick(fileName);
+        });
+    }
+	//获取列表长度
+    @Override
+    public int getItemCount() {
+        return fileList.size();
+    }
+    // 更新数据的方法(可选)
+    public void updateData(List<String> newList) {
+        this.fileList = newList;
+        notifyDataSetChanged();
+    }
+    // ViewHolder：内部类，用来缓存控件
+    static class MainViewHolder extends RecyclerView.ViewHolder {
+        TextView tvFileTitle;
+        ImageView ivIcon;
+        public MainViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvFileTitle = itemView.findViewById(R.id.list_file_title);
+            ivIcon = itemView.findViewById(R.id.list_file_icon);
+        }
+    }
+}
+```
+
+activity中使用
+
+```
+private RecyclerView recyclerView;
+private MainAdapter mainAdapter;
+private List<String> pathList = new ArrayList<>();
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    // 找到布局里的 RecyclerView
+    recyclerView = findViewById(R.id.list_file); 
+    // 重要 设置布局管理器，不然列表刷不出来
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    // 初始化适配器（传入空列表和点击回调）
+    List<String> dataList = new ArrayList<>();  //此处的dataList仅是提供一个空值防止传null后续会被newList替代
+    adapter = new FileAdapter(dataList, fileName -> {
+        // 这里是点击每一行后的逻辑
+        Toast.makeText(MainActivity.this, "你点击了：" + fileName, Toast.LENGTH_SHORT).show();
+    });
+    // 绑定适配器
+    recyclerView.setAdapter(adapter);
+    //观察并更新数据
+    vlViewModel.getPathMenuData().observe(this, newList->{
+        if(newList != null) mainAdapter.updateData(newList);
+    });
+}
+
 ```
 
