@@ -58,11 +58,12 @@ defaultConfig {
    ndk {
    		//或abiFilters.addAll(listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64"))
        abiFilters.add("armeabi-v7a")
-       abiFilters.add("arm64-v8a")
-       abiFilters.add("x86")  //用于适配模拟器环境
-       abiFilters.add("x86_64")  //同上
+       abiFilters.add("arm64-v8a")  //现代真机
+       abiFilters.add("x86")
+       abiFilters.add("x86_64")  //模拟器
        }
 ...
 }
 ```
 
+**注** 建议只加入"arm64-v8a"和"x86_64"加速apk安装且减小存储占用

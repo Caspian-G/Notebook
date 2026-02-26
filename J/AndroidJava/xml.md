@@ -69,38 +69,324 @@
 
 **注** 后面的代码会覆盖前面的 如果后面的代码声明铺满整个constraintlayout则会覆盖前面的text文本
 
+**注** app:layout_constraint..._to...Of只能在父为constraintlayout的情况下才能生效 如果父非constraintlayout那么可以使用<View></View>(android:layout_weight="1" //降低权重)将其它控件挤到其它位置以实现居右或居下的效果
+
 wrap_content 包裹内容
 
 match_parent 占满父母
 
-##### 顶部标题栏+下方滚动窗口 模式
+##### Button
 
 ```
-<LinearLayout
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="35dp"
+    android:text="test"
+    app:cornerRadius="0dp"  //去除角弧度
+    app:backgroundTint="@color/grey">
+</Button>
+```
+
+##### 顶部标题栏+次顶部下拉框+下方滚动窗口 模式      含activity中对于控件的逻辑代码
+
+```
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context=".view.MainActivity">
+    //顶部标题栏
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#219adb"
-        android:padding="12dp">
+ 	    android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:padding="6dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey"
+                android:text="VL">
+            </TextView>
+            <View  //用于填充中间空间
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+            </View>
+            <ImageButton
+                android:id="@+id/setting"
+                android:src="@drawable/ic_setting"
+                android:background="@color/white"
+                android:layout_width="20dp"
+                android:layout_height="match_parent">
+            </ImageButton>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/grey">
+            <ImageButton
+                android:id="@+id/search"
+                android:layout_width="27dp"
+                android:layout_height="match_parent"
+                android:background="@color/grey"
+                android:src="@drawable/ic_search"
+                android:paddingLeft="3dp">
+            </ImageButton>
+            <EditText
+                android:id="@+id/search_input"
+                android:layout_width="match_parent"
+                android:textSize="14sp"
+                android:imeOptions="actionSearch"  //将回车定义为“搜索”
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:includeFontPadding="false"
+                android:background="@null"  //去除背景避免文本被遮挡(父的height设置有些小) 不想去掉下划线强行修改padding也可以
+                android:gravity="center_vertical"  //垂直居中 改center后值还可水平居中
+                android:visibility="gone"
+                android:inputType="text">
+            </EditText>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+            </View>
+            <ImageButton
+                android:id="@+id/select_list"
+                android:layout_width="27dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_select_list"
+                android:background="@color/grey"
+                android:paddingRight="3dp">
+            </ImageButton>
+        </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            ...
+        </ScrollView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <TextView  //底部用于显示路径
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="path"
+            android:paddingLeft="4dp">
+        </TextView>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
+
+**注** IDEA可生成背景透明的向量资源 在res/drawable下新建Vector Asset即可
+
+**注** 使用本地图片android:src="@drawable/..." 使用自带资源库android:src="@android:drawable/..."
+
+```
+import androidx.appcompat.widget.PopupMenu;
+
+@Override
+protected void onCreate(Bundle savedInstanceState){
+	...
+	//以setting为例
+	final ImageButton selectList = findViewById(R.id.select_list);
+	selectList.setOnClickListener(new View.OnClickListener(){  //设置点击监听器
+		@Override
+		public void onClick(View v){  //View是button、ImageButton、TextView等类的基类
+			//下方如果直接使用this而不是MainActivity.this编译器会以为this是指OnClickListener对象
+			PopupMenu popup = new PopupMenu(MainActivity.this, v);
+			popup.getMenu().add("获取视频资源目录");
+			popup.getMenu().add("是否允许应用界面翻转 Now:");
+            popup.setOnMenuItemClickListener(item -> {  //设置点击每个选项的功能
+                String title = item.getTitle().toString();
+                if (title.equals("...")) {
+                    ...
+                }
+                return true;
+            });
+            popup.show();  //显示在屏幕上
+		}
+	});
+}
+```
+
+##### 使用EditText隐藏文本框时可采用全局点击逻辑
+
+```
+//判断点击坐标是否在event范围内
+private boolean isViewInEvent(View v, MotionEvent event) {
+    if( v!=null && v.getClass() == EditText.class ){
+        int[] loc = new int[2];
+        v.getLocationOnScreen(loc);
+        float x = event.getRawX();
+        float y = event.getRawY();
+        if( x > loc[0] && x < loc[0] + v.getWidth() && y > loc[1] && y < loc[1] + v.getHeight() ){
+            return true;
+        }
+    }
+    return false;
+}
+//全局点击逻辑
+@Override
+public boolean dispatchTouchEvent(MotionEvent event) {
+    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+        View v = getCurrentFocus();
+        if( !isViewInEvent(v, event) ){
+            searchInput.setVisibility(View.GONE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(searchInput.getWindowToken(), 0);  //键盘退出
+            }
+            searchInput.clearFocus();  //清除聚焦
+        }
+    }
+    return super.dispatchTouchEvent(event);
+}
+```
+
+##### 使用EditText对象的requestFocus()方法时 无法弹出键盘 可采用延迟聚焦请求的方法
+
+```
+private void settingClicker(View v) {
+    // 1. 先让输入框可见
+    searchInput.setVisibility(View.VISIBLE);
+    // 2. 加入延迟处理
+    searchInput.postDelayed(new Runnable() {
+        @Override
+        public void run() {
+            // 确保 View 已经拿到了焦点
+            searchInput.requestFocus();
+            // 获取系统键盘管理器
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                // 此时 View 已经布局完成，键盘可以顺利弹出
+                imm.showSoftInput(searchInput, InputMethodManager.SHOW_IMPLICIT);
+            }
+        }
+    }, 100); // 100 毫秒是体感延迟和成功率的平衡点
+}
+```
+
+##### 实现ImageButton点击时简单旋转动画逻辑 setting为例
+
+```
+ObjectAnimator animator = ObjectAnimator.ofFloat(v, "rotation", 0f, 180f);
+animator.setDuration(400);
+animator.start();
+```
+
+##### 点击setting弹出左侧抽屉栏效果
+
+将DrawerLayout包裹希望被覆盖的View
+
+**注** DrawerLayout中同一侧只能存在一个View
+
+```
+<androidx.drawerlayout.widget.DrawerLayout 
+    xmlns:android=...
+    android:id="@+id/..."
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout  //弹出时被覆盖部分
+    	...>
+    	...
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/..."
+        android:layout_width="100dp" 
+        android:layout_height="match_parent"
+        android:layout_gravity="start"  //从左侧弹出 这里不能不写layout
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:clickable="true">
+        
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="..."
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:text="设置选项"
+            android:textSize="20sp"
+            android:padding="20dp">
         </TextView>
     </LinearLayout>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="..."/>
-    </ScrollView>
-</LinearLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>
+```
+
+编写点击逻辑
+
+```
+private DrawerLayout drawerLayout = findViewById(R.id....);
+drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);  //禁用drawerlayout的手势滑动 避免覆盖两侧按钮点击事件
+drawerLayout.openDrawer(GravityCompat.START);
+```
+
+##### 使用Intent实现页面跳转
+
+同时创建新页面的xml和class
+
+**注** 新页面是可以使用onCreate和findViewById方法的
+
+**注** 在新页面的xml中的最外层View中设置id为main以对应.java中的全面屏适配代码中的findViewById(R.id.main)
+
+```
+setContentView(R.layout.activity_settings)  //在class里写上这段以连接xml和class
+```
+
+点击逻辑内
+
+```
+settingBtn.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        // 1. 创建 Intent：参数分别为 (当前页面上下文, 目标页面类)
+        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        // 2. 执行跳转
+        startActivity(intent);
+        // 如果你希望跳转后不能通过返回键回到这一页，可以调用 finish();
+    }
+});
+```
+
+**注** 解释一下为什么使用finish()可阻止返回 跳转过程中相当于入栈 finish()相遇出栈
+
+在AndroidManifest.xml中注册跳转后页面
+
+```
+<activity 
+    android:name=".view.SettingsActivity"
+    android:exported="false">
+</activity>
+```
+
+##### 获取EditText文本框中输入的内容
+
+```
+String text = ....getText().toString();
+```
+
+##### 使用Toast发出简单warning
+
+```
+Toast.makeText(this, "...", Toast.LENGTH_SHORT).show();
+```
+
+##### 从其它页面获取数据至main
+
+static方式 (无法保持数据持久化)
+
+```
+//MainActivity
+public static Text currentText;
+//OtherActivity
+MainActivity.currentText = text;
 ```
 
