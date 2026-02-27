@@ -138,18 +138,21 @@ private final MutableLiveData<WlPlayer> wlPlayerLiveData = new MutableLiveData<>
 public LiveData<WlPlayer> getWlPlayerLiveData() {
 	return wlPlayerLiveData;
 }
+wlPlayerLiveData.setValue(wlPlayer);
 
 类2 以Activity为例
 vlViewModel.getWlPlayerLiveData().observe(this, new Observer<WlPlayer>() {
     @Override
     public void onChanged(WlPlayer player) {
         if (player != null) {
-            wlSurfaceView.setWlPlayer(player);
+            ...
         }
     }
 });
 //当你执行 viewModel.getWlPlayerLiveData().observe(...) 时，Android 系统内部做了一件事：它把你的 Activity 引用和一个 onChanged 函数存进了一个 List（列表） 里，平时： 代码处于静默状态，完全不消耗 CPU 循环，不会像 while(true) 那样空转，触发时： 只要你在 ViewModel 中执行了 wlPlayerLiveData.setValue(player)，LiveData 内部就会遍历那个 List，挨个调用里面存着的 onChanged 方法
 ```
+
+**注** .setValue() 在主线程(UI线程)调用 它会立即更新LiveData的值    .postValue()可以在任何线程(通常是子线程)调用 它会把"更新数据"这个任务发给主线程的队列 等主线程有空了再执行
 
 #### Room本地数据库
 

@@ -350,7 +350,7 @@ drawerLayout.openDrawer(GravityCompat.START);
 
 **注** 新页面是可以使用onCreate和findViewById方法的
 
-**注** 在新页面的xml中的最外层View中设置id为main以对应.java中的全面屏适配代码中的findViewById(R.id.main)
+**注** 在新页面的xml中的最外层View中设置id为...以对应.java中的全面屏适配代码中的findViewById(R.id....)
 
 ```
 setContentView(R.layout.activity_settings)  //在class里写上这段以连接xml和class
@@ -539,5 +539,27 @@ protected void onCreate(Bundle savedInstanceState) {
     });
 }
 
+```
+
+#### FrameLayout(帧布局)实现层级效果(一层一层向上盖)
+
+```
+<FrameLayout>
+```
+
+#### 利用LayoutParams动态修改View的宽高
+
+```
+//onCreate()
+View myView = findViewById(R.id.video_framework);
+ViewGroup.LayoutParams params = myView.getLayoutParams();
+params.height = 1000;  //设置具体的像素值 单位px
+params.height = ViewGroup.LayoutParams.MATCH_PARENT;  //设置系统值
+myView.setLayoutParams(params);
+
+public int dpToPx(int dp) {  //dp转px
+    float density = getResources().getDisplayMetrics().density;
+    return Math.round((float) dp * density);
+}
 ```
 

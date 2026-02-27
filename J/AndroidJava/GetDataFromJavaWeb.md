@@ -44,7 +44,7 @@ public class VlViewModel extends ViewModel {
     public void fetchPathMenu(String baseUrl, String apiValue) {  //此处因为接口需传值所以定义了apiValue
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())  //这里只能接收和处理JSON数据
                 .build();  //收集之前填好的所有配置 把它们塞进一个复杂的Retrofit实例里并初始化好底层的网络引擎OkHttp
         ApiService api = retrofit.create(ApiService.class);
         //enqueue异步运行
@@ -64,9 +64,25 @@ public class VlViewModel extends ViewModel {
 }
 ```
 
+**注** 如果返回的是字符串 则无法使用.addConverterFactory(GsonConverterFactory.create())
+
+需要添加依赖
+
+```
+implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+```
+
+加上代码
+
+```
+.addConverterFactory(ScalarsConverterFactory.create())  //必须在前 
+.addConverterFactory(GsonConverterFactory.create())
+```
+
 #### Activity类
 
 ```
+//此除使用适配器 完整代码在xml.md查看
 vlViewModel.getPathMenuData().observe(this, newList->{
     if(newList != null) mainAdapter.updateData(newList);
 });

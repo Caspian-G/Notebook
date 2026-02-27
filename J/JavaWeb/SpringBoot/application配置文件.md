@@ -42,5 +42,9 @@ public class WebConfig implements WebMvcConfigurer {
 }
 ```
 
+#### 获取本机局域网下ip
 
+```
+String ip = InetAddress.getLocalHost().getHostAddress();  //不可在成员变量中直接赋值 因为.getLocalHost()可能会抛出异常
+```
 
