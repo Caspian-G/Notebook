@@ -20,6 +20,7 @@
         android:label="@string/app_name"  //定义应用显示名称
         android:supportsRtl="true"  //允许“从右到左”的布局
         android:theme="@style/Theme.VL">  //整个应用的皮肤
+        android:icon="@drawable/ic_launcher"  //设置软件外图标
         //定义用户能看到的界面
         <activity
             android:name=".MainActivity"
