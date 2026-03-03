@@ -49,5 +49,15 @@ python
 a = "abc";  //可随意更改数据类型
 ```
 
+##### ASCII
 
+```
+char a = '0';  //ASCII 48
+char a = 'A';  //ASCII 65
+char a = 'a';  //ASCII 97
+char a = '\0';  //ASCII 0
+char a = '\n';  //ASCII 10
+char a = '\r';  //回车(光标移到本行行首) ASCII 13
+char a = ' ';  //ASCII 32
+```
 
