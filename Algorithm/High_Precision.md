@@ -16,7 +16,7 @@ vector<int> add(string a, string b){
     return sum;
 }
 //sub
-vector<int> sub(string a, string b){
+vector<int> sub(string a, string b){  //其实等价于abs() 因为我在函数内部判断a和b的大小
 	vector<int> A, B, diff, zero(1, 0);
 	int isABigger = -1;
 	for (int i = a.length() - 1; i >= 0; i--) A.push_back(a[i] - '0');
@@ -88,10 +88,10 @@ vector<int> mul(string a, string b){
 	}
 	return prod;
 }
-//div
+//div (a/b) 需提前判断 b != 0
 vector<int> div(string a, string b){
-	vector<int> A, B, quot;
-	
+	vector<int> A, B, quot;  //quotient 商
+	//通过减法模拟 试商法
 }
 int main(){
 	ios::sync_with_stdio(0);
