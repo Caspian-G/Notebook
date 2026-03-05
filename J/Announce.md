@@ -67,5 +67,23 @@ String result = sb.toString();
 .equals()  //比较值
 ```
 
+#### lambda
 
+java所有的lambda表达式背后都需要一个函数式接口(一个接口有且只有一个抽象方法)
+
+```
+//.java
+@FunctionalInterface  //函数式接口注解 保证只有一个抽象方法
+interface NoParameterNoReturn { 
+	void test();
+	default void test2() {
+		System.out.println("JDK1.8新特性，default默认方法可以有具体的实现");
+	}
+}
+//.java
+NoParameterNoReturn noParameterNoReturn = () -> {
+    System.out.println("无参数无返回值");  //此处可直接捕获并使用外部变量 但需保证外部变量是final或从未修改过
+};
+noParameterNoReturn.test();  //执行函数
+```
 

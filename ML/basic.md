@@ -50,3 +50,11 @@ random.shuffle(seq)  //将序列中元素顺序随机打乱再排列
 random.sample(seq, k=3)  //从序列中随机选取k个元素以列表方式返回
 ```
 
+##### lambda 匿名函数 
+
+```
+相当于将整个函数赋值给一个变量
+a = lambda x, y: x + y  //语法 lambda 参数: 返回值
+b = a(x, y)  //函数生效
+```
+

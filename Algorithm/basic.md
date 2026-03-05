@@ -33,6 +33,47 @@ using namespace std;  //全声明命名空间
 using std::cin;  //部分声明
 ```
 
+##### lambda  (c++11及以上)
+
+```
+//语法
+[capture](parameters) mutable -> return_type {  加上mutable后捕获的变量的拷贝值就可修改 但依旧不会修改原变量值
+    // 函数体 
+}
+
+//捕获方式
+捕获方式		语法		生命周期		修改权限		示例
+值捕获			 [x]	  创建时拷贝		需要mutable	int x=5; [x]{...};
+引用捕获	    [&x]	 依赖原变量		直接修改原值	 [&x]{x=10;};
+隐式值捕获		[=]		创建时全拷贝	  需要mutable	  [=]{return a+b;};
+隐式引用捕获	   [&]		依赖原变量	  直接修改原值	[&]{modify(a);};
+捕获当前类的this指针[this]	依赖外部对象	不需要mutable	[this]{return m_var;}
+混合捕获		[=, &x]	   组合使用		 按各自规则	   [=,&err]{...};
+auto a = [&b] {  //无参引用捕获事例 相当于将函数赋值给了a 此处若无法使用auto则当函数不return时使用std::function<void()> []内可以写捕获表达式(c++14)
+    b += 5;
+}; a();  //此处调用函数体b值+5
+//参数传递方式
+auto a = [](int x, int y){return x + y;};  //显式参数类型
+auto a = [](auto x)->float{if(x == 0)return 0;else return static_cast<float>(x);};  //当return多类型时需显式定义返回类型
+
+//高级特性
+//立即执行
+const auto result = [](int base) {
+    int sum = 0;
+    for(int i = 1; i <= base; ++i) 
+    {
+        sum += i;
+    }
+    return sum;
+}(100);  //此处加上(100)后会立即执行函数并返回结果 而不是把函数本身赋值给result变量
+std::cout << result;  //输出5050
+//递归lambda
+auto factorial = [](auto self, int n) -> int {
+    return n <= 1 ? 1 : n * self(self, n-1);
+};
+std::cout << factorial(factorial, 5);  //输出120
+```
+
 ##### 循环语法糖
 
 ```c++
@@ -86,6 +127,16 @@ public:
         return val;
     }
 };
+```
+
+##### 强制类型转换(显式)
+
+```
+double x = (double)y;  //c风格
+double x = static_cast<double>(y);  //编译时转换 适用非多态转换
+double x = dynamic_cast<double>(y);  //运行时转换 多态类之间的安全转型
+double x = const_cast<double>(y);  //编译时转换 唯一可对const变量操作 但会去除const 有后续只读变量被修改的风险
+double x = reinterpret_cast<double>(y);  //编译时转换 硬件地址操作、位模式重新定义
 ```
 
 ##### ASCII

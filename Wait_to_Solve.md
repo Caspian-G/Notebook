@@ -2,13 +2,11 @@ ioc di aop pojo
 
 git 批处理
 
-py java lambda
+java匿名类
 
 状态机  垃圾回收机制
 
 c++ class
-
-归一化 过拟合
 
 
 
