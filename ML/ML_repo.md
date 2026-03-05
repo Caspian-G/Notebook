@@ -56,6 +56,11 @@ np.random.rand()  //[0, 1) 随机浮点数
 np.random.rand(2)  //array([..., ...]) 一行二列数组 元素[0, 1)
 np.random.rand(2, 2)  //array([[..., ...], [..., ...]]) 二行二列数组 元素[0, 1)
 np.random.randn()  //同上按照参数返回一个或一组服从标准正态分布的随机样本值 注 标准正态分布以0为均值1为标准差
+
+np.bincount(x)
+x = np.array([0, 1, 1, 3, 2, 1, 7])
+bins = np.bincount(x)  //统计0-7每个数字出现的次数 会自动识别范围若x = np.array(["a", "a", "a", "b", "b"])则会统计a、b的出现次数
+print(bins)  //输出[1 3 1 1 0 0 0 1]
 ```
 
 #### SciPy

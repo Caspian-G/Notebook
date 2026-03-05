@@ -58,3 +58,19 @@ a = lambda x, y: x + y  //语法 lambda 参数: 返回值
 b = a(x, y)  //函数生效
 ```
 
+##### 快速生成推导式
+
+```
+{键: 值 for 变量 in 可迭代对象 if 条件}  //字典
+[变量/表达式 for 变量 in 可迭代对象 if 条件]  // 列表
+tuple(变量 for 变量 in 可迭代对象 if 条件)  //元组  (...) 被分配给了生成器
+{变量 for 变量 in 可迭代对象 if 条件}  //集合
+```
+
+##### zip()
+
+```
+把多个可迭代对象(列表、元组等)像拉链一样"咬合"在一起 配对成一个个元组
+{n: v for n,v in zip(datas.target_names, np.bincount(datas.target))}
+```
+
