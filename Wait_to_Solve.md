@@ -8,6 +8,8 @@ py java lambda
 
 c++ class
 
+归一化 过拟合
+
 
 
 生命周期

@@ -34,3 +34,19 @@ x = 1.111111111
 print(f"{x:.2f}")  //仅插入保留两位小数点的形式
 ```
 
+##### random库  提供各种伪随机数
+
+```
+import random
+seed(n)  //可固定种子数为n
+random.randint(a, b)  //[a, b] 随机整数
+random.randrange(a)  //[0, a) 随机整数
+random.randrange(a, b, step)  //[a, b) 以step为步长的随机整数
+random.random()  //[0.0, 1.0) 随机浮点数
+random.uniform(a, b)  //[a, b] 随机浮点数
+random.choice(seq)  //从序列中随机返回一个元素 seq可以是字符串、列表等等
+random.choices(["win", "lose", "draw"], [4, 4, 2], k=10)  //在序列中重复采样k次 可设置各元素权重如[4, 4, 2]
+random.shuffle(seq)  //将序列中元素顺序随机打乱再排列
+random.sample(seq, k=3)  //从序列中随机选取k个元素以列表方式返回
+```
+
