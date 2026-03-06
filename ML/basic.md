@@ -11,6 +11,7 @@ x = "{0[name]}{0[age]}".format(dict)  //x = "abc20" dict = {name: "abc", age = "
 x = "{newDict[name]}{newDict[age]}".format(newDict = dict)
 x = "{name}{age}".format(**dict)
 x = "{Person.name}{Person.age}".format(Person = person)  //x = "abc20" class Person: name = abc, age = 20
+x = "{:.2f}".format(0.1111111)  //保留两位小数
 //使用__format__()  可自定义对象在格式化时输出
 class Test():
 	def __format__(self, test):
@@ -32,6 +33,8 @@ x = 111  //x可以是任何表达式
 print(f"{x}")
 x = 1.111111111
 print(f"{x:.2f}")  //仅插入保留两位小数点的形式
+print(f"Test set predicition: {[f'{x:.3f}' for x in predictions ]}")  //这种写法可让列表中元素保留三位小数
+注 使用f-string表达式时 双引号内需使用单引号
 ```
 
 ##### random库  提供各种伪随机数

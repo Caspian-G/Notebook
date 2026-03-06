@@ -142,6 +142,7 @@ fig = plt.figure(figsize=(8, 4))  //画布宽8英寸 高4英寸
 ax = fig.add_subplot(1, 1, 1)  //添加一行一列的第一个子图 仅一图
 //创建方式二
 fig, ax = plt.subplots(figsize=(8, 4))  //与方式一等价
+fig, ax = plt.subplots(1, 3, figsize=(8, 4))  //绘制3个子图
 
 //plot 折线图 实例
 x = np.linspace(0, 10, 100)
@@ -150,12 +151,21 @@ y2 = np.cos(x)
 fig, ax = plt.subplots(figsize=(10, 5))
 ax.plot(x, y1, label="sin(x)", color="blue", linewidth=2, linestyle="-")  //实线 label需配合ax.legend()使用 可加入marker参数标记数值点
 ax.plot(x, y2, label="cos(x)", color="red", linewidth=1.5, linestyle="--")  //虚线
+//上述未指定格式字符串设置绘图类型所有默认画线 单可设置仅打点
+//ax.plot(x, example, "*")  仅打*点
+//ax.plot(x, example, "--")  仅画虚线
+//ax.plot(x, example, "-*")  画线且打点
+//ax.plot(x, example, marker="*", markersize=...)  (显式)画线且打点
 ax.set_title("正弦函数与余弦函数曲线", fontsize=15)  //标题
 ax.set_xlabel("x值", fontsize=12)  //x轴标签
 ax.set_ylabel("y值", fontsize=12)  //y轴标签
-ax.legend(fontsize=10)  //添加图例(右上角)
+ax.legend(fontsize=10)  //添加图例(默认右上角)
+//上述plot方法中label可在此设置
+//ax.legend(["sin(x)", "cos(x)"], loc="best", ...)
 ax.grid(alpha=0.3)  //添加网格线 alpha设置透明度
 plt.show()
+//可直接用plt.plot() 本质上是在操作当前axes
+plt.plot(x, y, ...)  //当不写x值时，会默认使用y的索引作为x
 
 //scatter 散点图
 x = np.random.randn(100)
