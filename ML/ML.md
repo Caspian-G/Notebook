@@ -77,11 +77,92 @@ print("Test set score: {:.2f}".format(ridge.score(X_test, y_test)))
 from sklearn.linear_model import Lasso
 from sklearn.model_selection import train_test_split
 import mglearn
+import numpy as np
 X, y = mglearn.datasets.load_extended_boston()
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 lasso = Lasso(alpha=...).fit(X_train, y_train)  //增大或减小alpha参数以增大或减小系统受到的约束 减低alpha时记得增大max_iter(运行迭代的最大次数)
 print("Training set score: {:.2f}".format(lasso.score(X_train, y_train)))
 print("Test set score: {:.2f}".format(lasso.score(X_test, y_test)))
 print("Number of features used: {}".format(np.sum(lasso.coef_!=0)))  //Lasso对线性回归的L1正则化过程可能会让模型忽略一些特征使其权重为0
+```
+
+###### ElasticNet (弹性网络) sklearn库提供可同时使用L1正则化和L2正则化
+
+```
+from sklearn.linear_model import ElasticNet
+from sklearn.model_selection import train_test_split
+import mglearn
+import numpy as np
+X, y = mglearn.datasets.load_extended_boston()
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+en = ElasticNet(alpha=..., l1_ratio=0.5).fit(X_train, y_train)  //增大或减小alpha参数以增大或减小系统受到的约束  l1_ratio=0.5表示L1和L2占比各一半
+print("Training set score: {:.2f}".format(en.score(X_train, y_train)))
+print("Test set score: {:.2f}".format(en.score(X_test, y_test)))
+print("Number of features used: {}".format(np.sum(en.coef_!=0)))  //Lasso对线性回归的L1正则化过程可能会让模型忽略一些特征使其权重为0
+```
+
+###### LogisticRegresssion(分类算法)
+
+```
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+cancer = load_breast_cancer()
+X_train, X_test, y_train, y_test = train_test_split(cancer.data, cancer.target, stratify=cancer.target, random_state=42)  //stratify用于确保训练集和测试集中的良性和恶性数据的比例和原数据集的target比例一致 避免出现训练集或测试集内数据出现全是恶性或全是良性的情况
+logreg = LogisticRegression(C=100, max_iter=10000, l1_ratio=1).fit(X_train, y_train)  //默认L2正则化 C越大系数约束越弱 max_iter设置最大迭代次数 l1_ratio=1可设置为L1正则化(需要修改solver求解器 默认lbfgs仅支持L2)
+print("Training set score: {:.2f}".format(logreg.score(X_train, y_train)))
+print("Test set score: {:.2f}".format(logreg.score(X_test, y_test)))
+import matplotlib.pyplot as plt
+plt.plot(logreg.coef_.T, "o")  //此行代码可查看各系数点的值分布 转置是因为logreg.coef_的形状是1行n列即[[..., ...]]而不是[[...], [...], ...] 不转置plot方法会以为x轴只有一个0值
+```
+
+###### LinearSVM(分类算法)
+
+```
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.svm import LinearSVC
+cancer = load_breast_cancer()
+X_train, X_test, y_train, y_test = train_test_split(cancer.data, cancer.target, stratify=cancer.target, random_state=42)  //stratify用于确保训练集和测试集中的良性和恶性数据的比例和原数据集的target比例一致 避免出现训练集或测试集内数据出现全是恶性或全是良性的情况
+svc = LinearSVC(C=100, max_iter=10000, penalty="l1").fit(X_train, y_train)  //默认L2正则化 C越大系数约束越弱 max_iter设置最大迭代次数 penalty="l1"设置L1正则化(solver为liblinear可支持L1正则化)
+print("Training set score: {:.2f}".format(svc.score(X_train, y_train)))
+print("Test set score: {:.2f}".format(svc.score(X_test, y_test)))
+```
+
+**注** 除了二分类 线性模型也可支持多分类
+
+**注** scikit-learn中所有模型的fit方法返回的都是self
+
+#### 朴素贝叶斯分类器
+
+```
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB  //包含GaussianNB BernoulliNB(仅特征值为二分类时) MultinomialNB(仅特征值为计数数据即非负整数时) 此处GaussianNB为例
+cancer = load_breast_cancer()
+X_train, X_test, y_train, y_test = train_test_split(cancer.data, cancer.target, stratify=cancer.target, random_state=42) 
+gnb = GaussianNB().fit(X_train, y_train)
+print("Training set score: {:.2f}".format(gnb.score(X_train, y_train)))
+print("Test set score: {:.2f}".format(gnb.score(X_test, y_test)))
+```
+
+#### 决策树
+
+```
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+cancer = load_breast_cancer()
+X_train, X_test, y_train, y_test = train_test_split(cancer.data, cancer.target, stratify=cancer.target, random_state=42) 
+tree = DecisionTreeClassifier(max_depth=4, random_state=0).fit(X_train, y_train)  //random_state用于在内部解决平局问题 max_depth用于限制树深度不包括根节点(常用预剪枝策略之一，若不进行预剪枝会导致树一直展开最终过拟合，训练集精准度到达100%)
+print("Training set score: {:.2f}".format(tree.score(X_train, y_train)))
+print("Test set score: {:.2f}".format(tree.score(X_test, y_test)))
+//分析决策树 树可视化
+from sklearn.tree import export_graphviz
+export_graphviz(tree, out_file="tree.dot", class_names=["malignant", "benign"], feature_names=cancer.feature_names, impurity=False, filled=True)  //生成.dot文件将树可视化
+import graphviz
+with open("tree.dot") as f:  //打开.dot文件
+	dot_graph = f.read()
+graphviz.Source(dot_graph)
 ```
 
