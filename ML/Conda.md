@@ -44,3 +44,5 @@ Github下载.exe+安装+设置环境变量+cmd:conda init
 
 安装Conda-Forge软件包：`conda install -c conda-forge package_name`
 
+**注** 上述过程conda可能会自动生成profile.ps1文件 这个配置文件可以让powershell每次启动自动加载conda环境但我们必须给文件操作powershell的权限 `Set-ExecutionPolicy RemoteSigned`
+
