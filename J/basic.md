@@ -1,5 +1,3 @@
-# Announce
-
 #### 修饰符
 
 |           | 同一类 | 同一包 | 子类 | everywhere |
@@ -87,3 +85,56 @@ NoParameterNoReturn noParameterNoReturn = () -> {
 noParameterNoReturn.test();  //执行函数
 ```
 
+#### 运行原理
+
+javac: .java -> .class    JVM对.class进行解释型执行  (java更像一个混合语言同时存在编译型特征和解释性特征)
+
+#### switch
+
+```
+//java11及以前
+int day = 1;
+String dayName;
+switch (day) {  //day可以是多种类型(java17+)但必须有参数
+    case 1:
+        dayName = "Monday";
+        break;
+    case 2:
+        dayName = "Tuesday";
+        break;
+    default:
+        dayName = "Unknown";
+}
+//注 除最后一个小段其余必须加上break;
+//注 不能直接返回值
+```
+
+```
+//java12/17+
+int day = 1;
+String dayName = switch (day) {
+    case 1, 7 -> "Weekend"; // 逗号合并
+    case 2, 3, 4, 5, 6 -> "Weekday";
+    default -> "Invalid day"; // 作为表达式时，default 通常是强制的
+};
+//注 使用->无需break
+//注 switch可直接返回值
+//注 case后可接多参数 但依旧只能是常量(java17+可支持模式匹配case后可写类型但使用依然受限)
+String result = switch (score) {
+    case 100 -> {
+        System.out.println("满分！");
+        yield "Perfect"; //使用该switch形式在case内有多行逻辑时不能使用return 而必须用yield返回值
+    }
+    default -> "Good";
+};
+```
+
+#### 判断对象类型
+
+```
+对象 instanceof 类名  //判断一个对象是不是属于某个特定的类或其子类 返回true或false
+dog instanceof Dog  //true
+dog instanceof Animal  //true
+null instanceof 任何类  //false
+list instanceof Serializable  //也可检查对象是否实现了某接口
+```

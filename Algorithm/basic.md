@@ -164,3 +164,25 @@ char a = ' ';  //ASCII 32
 typeid(a).name()  //可输出a的数据类型(较长) 用处不大
 ```
 
+##### start main
+
+```
+声明int返回值类型是因为需要给os返回是否成功执行 现代编译器的标准
+```
+
+##### switch
+
+```
+switch(x){  //x必须时int char bool或枚举
+	case ...:  //case后面接的必须是常数
+		...
+		[break;]
+	case ...:
+		...
+		[break;]
+	default:
+		...
+		[break;]  //只要default在最后加不加break一样
+}
+```
+
