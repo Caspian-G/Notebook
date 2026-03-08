@@ -53,7 +53,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "C++: Debug with g++",
+            "name": "C++_Debug",
             "type": "cppdbg", //MinGW(gcc的win移植版开发环境)必须使用cppdbg
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
