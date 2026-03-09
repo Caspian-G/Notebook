@@ -78,9 +78,31 @@ nvcc -g -G Demo.cu -o demo -Xcompiler "/utf-8"  //让nvcc调用cl.exe时带上ut
 cuda-gdb必须在linux环境下运行 所以我们需要一个Linux系统 WSL2提供了一种轻量化虚拟化技术
 
 ```
-wsl --install  //默认安装Ubuntu
-//VSCode安装WSL插件 
+//双击本地下载好的wsl.2.6.3.0.x64.msi安装wsl内核
+wsl --install -d Ubuntu  //下载太卡可直接在MicrosoftStore里下载
+//ubuntu在C:\Users\你的用户名\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu...\LocalState\ext4.vhdx实际上我们直接操作资源器里的虚拟磁盘文件就行
+//VSCode安装WSL插件
+//在WSL终端输入nvidia-smi如果能看到显卡信息说明硬件层已打通
+//在WSL的Ubuntu中安装CUDA Toolkit(默认预装gcc)  严禁在WSL里装驱动
+wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-keyring_1.1-1_all.deb//下载NVIDIA的密钥环 针对 WSL2-Ubuntu 22.04
+sudo dpkg -i cuda-keyring_1.1-1_all.deb  //安装密钥环
+sudo apt-get update  //更新软件源
+sudo apt-get -y install cuda-toolkit-12-6  //正式安装CUDA工具包
+//安装完后添加CUDA编译器的环境变量
+vim ~/.bashrc
+export PATH=/usr/local/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+source ~/.bashrc  //让环境变量立即生效而不用重新打开终端
+nvcc --version
+//连接vscode
+mkdir -p ~/Projects/C_C++_Projects/CUDA
+打开vscode插件并打开Ubuntu22.04即可自动连接
 ```
+
+###### vscode(WSL)
+
+使用rm命令进行删除操作
+修改tasks.json和launch.json  不能有.exe 无需刻意指定编码"-Xcompiler", "/utf-8"
 
 
 
