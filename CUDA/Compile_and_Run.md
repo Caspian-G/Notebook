@@ -105,4 +105,3 @@ mkdir -p ~/Projects/C_C++_Projects/CUDA
 修改tasks.json和launch.json  不能有.exe 无需刻意指定编码"-Xcompiler", "/utf-8"
 
 
-

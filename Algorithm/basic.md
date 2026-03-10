@@ -40,6 +40,24 @@ using namespace std;  //全声明命名空间
 using std::cin;  //部分声明
 ```
 
+##### #define  typedef;
+
+```
+#define ... ...  //宏定义 编译前文本替换 new前old后
+typedef ... ...;  //给已有数据类型创建别名 old前new后
+```
+
+##### struct
+
+```
+//c语言
+struct name{};  //标准结构体  创建变量struct name a;
+struct name{}s;  //顺带创建变量
+typedef struct name{}newname;  //创建别名  创建变量newname a;
+typedef struct{}name;  //本无名直接创建别名
+//c++ 无需typedef也可直接使用 结构体名 变量名 的形式创建单个变量
+```
+
 ##### lambda  (c++11及以上)
 
 ```
@@ -184,6 +202,12 @@ switch(x){  //x必须时int char bool或枚举
 		...
 		[break;]  //只要default在最后加不加break一样
 }
+```
+
+##### const
+
+```
+const int a = 1;  //const修饰时就必须赋初值  不同于java的final可之后赋初值
 ```
 
 ##### 指针
