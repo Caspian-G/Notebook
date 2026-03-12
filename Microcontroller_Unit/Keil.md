@@ -8,6 +8,12 @@ D:\Keil_uVision5(MDK-ARM_v5.43)\Keil_v5\UV4
 
 D:\Keil_uVision5(MDK-ARM_v5.43)\Arm\Packs
 
+#### SignUp Community
+
+管理员身份运行  File -> License Management  复制CID
+
+需要keygen注册机 获取LIC 在License Management里add即可
+
 #### Create Project
 
 Project -> new uVision Project
@@ -19,6 +25,4 @@ Project -> new uVision Project
 ##### Create File
 
 File -> new  写入代码  Save As 设置路径和名称(必须.c)建议保存至和.uvprojx同级  最后需右键项目里的Source Group 1 选择Add Existing Files
-
-
 

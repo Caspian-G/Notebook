@@ -19,6 +19,7 @@ size_t a = 1;  //等价于size_t long a = 1;64位系统上
 max()  max({})
 abs()  //绝对值 只用于整数变量 <cmath>的fbs()可用于浮点
 sort(a, a+5)  //默认从小到大排
+find(a.begin(), a.end(), ...)  //查找 返回迭代器
 swap(x, y)  //交换x和y
 reverse(a, a+5)  //翻转数组a索引为0到4的值(a指向索引0)
 fill(a, a+3, 1)  //在某区间内填充某值 1 1 1
