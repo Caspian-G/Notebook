@@ -20,5 +20,3 @@ activate环境+conda(mamba) install jupyter
 
 ```jupyter notebook```
 
-```exit```
-

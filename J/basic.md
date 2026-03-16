@@ -1,3 +1,13 @@
+#### JDKJREJVM
+
+![](D:\Notebook\Assets\Photoes\3e3560c0ce275eebe70a454c05a2755f.png)
+
+```
+javac ....java  //编译  使用官方库无需额外输入参数
+javac -cp ".;lib/*" ....java  //使用官方库时 第三方jar放在lib文件夹下
+java -cp ".;lib/*" ...  //运行
+```
+
 #### 修饰符
 
 |           | 同一类 | 同一包 | 子类 | everywhere |
@@ -27,12 +37,6 @@ public class DemoSon extends DemoFather{
 #### 项目name修改
 
 项目结构中项目名修改+本地磁盘下项目名修改
-
-#### 经典https测试视频
-
-```
-"http://vjs.zencdn.net/v/oceans.mp4"
-```
 
 #### 使用正则表达式分割字符
 
@@ -138,3 +142,25 @@ dog instanceof Animal  //true
 null instanceof 任何类  //false
 list instanceof Serializable  //也可检查对象是否实现了某接口
 ```
+
+#### I/O
+
+```
+Scannner scanner = new Scanner(System.in);
+String name = scanner.nextLine();  //.nextInt() .nextDouble()
+
+//以下调用命令行需在try{}下
+String command = "java --version";
+Process process = Runtime.getRuntime().exec(command);  //创建进程
+BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+String reader;
+while((reader = bufferedReader.readLine()) != null){  //读取每行
+    System.out.println(reader);
+}
+bufferedReader.close();
+process.waitFor();  //等待命令行执行完毕
+//或使用ProcessBuilder创建进程
+ProcessBuilder processBuilder = new ProcessBuilder("java", "--version");
+Process process = processBuilder.start();
+```
+

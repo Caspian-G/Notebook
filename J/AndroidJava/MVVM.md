@@ -157,3 +157,5 @@ vlViewModel.getWlPlayerLiveData().observe(this, new Observer<WlPlayer>() {
 #### Room本地数据库
 
 设计思想：单例模式
+
+底层是在操作SQLite的一个.db文件

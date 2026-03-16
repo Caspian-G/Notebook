@@ -14,14 +14,17 @@ pwd  //回显具体路径
 mkdir -p  //创建文件夹 -p允许递归创建多层
 cd  //跳转到路径
 dir  //遍历文件夹
-rm  //删除文件
+rm  //删除文件  删除文件夹带上-r(递归删除)
+mv oldName(oldFolder) newName(newFolder)  //更改文件名(文件夹名) 或 移动文件(文件夹)
 ./...  //运行当前文件夹下的...
 
 sudo apt update  //更新软件包列表
-
 sudo apt install build-essential -y  //apt是Ubuntu软件管家 build-essential是gcc开发工具包 -y指同意
 注 apt会把软件装到系统级的目录(/usr/bin或/usr/lib)而不是你当前文件夹下
 gcc --version
+
+wget https://...  //非互动式网络下载工具
+unzip ....zip  //解压.zip
 ```
 
 #### Vim

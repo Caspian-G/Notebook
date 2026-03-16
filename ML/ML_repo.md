@@ -270,6 +270,8 @@ display(data_pandas)
 display(data_pandas[data_pandas.Age > 19])  //条件输出
 ```
 
+**注** 若需保存数据集 数据量非特别庞大的情况下 存.csv即可 无需数据库 因为pandas可高效处理.csv
+
 #### sklearn
 
 学习路径 [Scikit-learn（sklearn）机器学习库详解_sklearn库是什么-CSDN博客](https://blog.csdn.net/weixin_38526314/article/details/156188164?ops_request_misc=%7B%22request%5Fid%22%3A%22f00e95684b2753bf8e4cc3c4039b67f2%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&request_id=f00e95684b2753bf8e4cc3c4039b67f2&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-156188164-null-null.142^v102^control&utm_term=sklearn&spm=1018.2226.3001.4187)
