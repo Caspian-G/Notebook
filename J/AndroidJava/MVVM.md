@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
 **注** onCreate运行系统创建了按钮 你告诉系统“把这个 Lambda 表达式（那个 ->里的代码）存到这个按钮的"小本本"里 onCreate运行结束功成身退 虽然 onCreate跑完了 但按钮的"小本本""还在内存里
 
+**注** R.raw.main 中 R 报错 可能是需要import com.package.name.R 
+
 #### presentation.adapter.MainAdapter.java
 
 ```
