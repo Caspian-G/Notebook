@@ -112,6 +112,8 @@ int main(){
 
 **注** int a = '9' - '1'; 此处减的是char的ASCII，巧妙得自动转为类型为int的a
 
+**注** char achar = 'A'; 处理十六进制时，int aint = achar - 'A' + 10;
+
 #### Recursion
 
 **注** 在函数内调用自身即为递归 函数不一定需要返回值

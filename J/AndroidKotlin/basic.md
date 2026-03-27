@@ -46,6 +46,12 @@ kotlin DemoKt.class  //这里依赖kotlin环境 如果直接使用java运行JVM�
 
 #### 语法
 
+##### 启动函数
+
+```
+fun main(){}
+```
+
 ##### 变量
 
 ```

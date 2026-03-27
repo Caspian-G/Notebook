@@ -214,6 +214,8 @@ const int a = 1;  //const修饰时就必须赋初值  不同于java的final可�
 
 野指针: 指向不确定或无效内存地址的指针
 
+**注** 野指针或空指针无法使用p->next
+
 ```
 * //1 声明指针 2 获取指针变量的内容
 & //1 引用(cpp) 2 获取变量的地址
@@ -221,5 +223,16 @@ char* p = "abc";  //指针存放的永远是首地址
 *p  //当指针指向的地址具有序列性时如string，*取值时只会取首值
 const char* p;  //不能修改指针指向的内容
 char* const p;  //不能修改指针变量的指向
+
+//c++ 申请/释放内存空间
+Stu* stuTemp = new Stu();
+delete stuTemp;
+delete[] list;  //释放整个链表空间
+```
+
+##### VLA变长数组
+
+```
+int a[n];  //形如此 n为变量 尽量用vector创建VLA
 ```
 

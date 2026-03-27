@@ -50,7 +50,7 @@ override fun onCreate(savedInstanceState: Bundle?){  //kotlin函数无@Override�
 ```
 @Composable
 fun test(){
-	column{
+	column{  //不加 默认水平排布
 		Row{
 			Text("test1")
 			Text("test2")
