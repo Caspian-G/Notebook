@@ -194,13 +194,13 @@ typeid(a).name()  //可输出a的数据类型(较长) 用处不大
 switch(x){  //x必须时int char bool或枚举
 	case ...:  //case后面接的必须是常数
 		...
-		[break;]
+		break;  //记得break;
 	case ...:
 		...
-		[break;]
+		break;
 	default:
 		...
-		[break;]  //只要default在最后加不加break一样
+		break;  //只要default在最后加不加break一样
 }
 ```
 
@@ -228,6 +228,15 @@ char* const p;  //不能修改指针变量的指向
 Stu* stuTemp = new Stu();
 delete stuTemp;
 delete[] list;  //释放整个链表空间
+//指针不申请空间无法存连续值
+
+const char* p; == char const* p;  //可修改p指向地址 但不可修改p指向内容
+char* const p;  //可修改p指向内容 但不可修改p指向地址
+
+//将指针作为参数传递时 依旧会是传递副本 除非加上&
+int* p;
+func(p);
+void func(int* p){}  //该函数中可以对指针指向地址的内容进行修改 但修改形参p的指向时 实参是不会跟着修改的 除非引用即int* &p
 ```
 
 ##### VLA变长数组

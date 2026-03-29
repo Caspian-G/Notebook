@@ -127,7 +127,31 @@ getline(cin, line, ',');
 ```
 
 ```
-//<map>
+//<map>  底层原理红黑树
+map<string, int> m1;  //构造一个key为string value为int的空容器
+map<string, int> m2(m1);  //拷贝构造
+map<string, int> m3(m2.begin(), m2.end());
+m1.insert(pair<string, int>("abc", 123));  //pair可用于构造键值对 map对键值对进行查询
+m1[...] = ...;  //直接插入或修改
+m1.find(key);  //查到返回包含位置的迭代器 没查到返回m1.end()
+m1.erase(it \or key);  //删除 迭代器 or key 对应的键和值
+m1.erase(first, last);  //左闭右开迭代器
+m1.size();
+m1.clear();
+m1.empty();  //判空
+m1.count(key);  //map中键唯一 存在返回1不存在返回0
+m1.lower_bound();  //返回迭代器 指向键>=key的第一个元素
+m1.upper_bound();  //返回迭代器 指向键>key的第一个元素
+//迭代器
+m1.begin(); m1.end(); m1.rbegin(); m1.rend();  //使用迭代器需将其视作指针 但它同样可以被加减移位
+```
 
+```
+//<utility>
+//std::pair
+pair<string, int> p1("abc", 123);
+pair<string, int>("abc", 123);  //临时使用如插入map
+p1 = {"aaa", 111};  //赋值 覆盖原值
+p1 = make_pair("aaa", 111);  //等价于p1 = pair<string, int>("aaa", 111);
 ```
 
