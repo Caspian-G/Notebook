@@ -155,3 +155,107 @@ p1 = {"aaa", 111};  //赋值 覆盖原值
 p1 = make_pair("aaa", 111);  //等价于p1 = pair<string, int>("aaa", 111);
 ```
 
+```
+//<thread>  兼容Linux和win  自动多核并行
+//构造函数
+thread t1;  //无参构造
+t1 = thread(func, 10);  //移动赋值函数 func是函数指针 10是func的参数
+注：不允许拷贝构造
+thread t1(func, 10);  //函数指针构造 thread使用了模板 你可以声明func的返回值和它的参数为任何类型 但建议声明返回值为void因为thread会直接忽略返回值
+//成员函数
+t1.joinable();  //返回true/false 判断线程是否可以执行.join() 在.joinable()返回true的情况下使用移动赋值(移动赋值的过程也是先销毁原绑定线程在赋值)或销毁t1绑定线程 程序都会调用std::terminate()终止整个进程
+t1.join();  //执行这一段代码的线程将被t1阻塞等待t1执行完后再运行
+t1.detach();  //将线程对象t1与其绑定的线程分离 分离后的线程在后台运行
+t1.get_id();  //获取t1绑定线程的id
+t1.swap(t2);  //交换
+//this_thread类
+std::this_thread::get_id();  //获取当前线程的id
+std::this_thread::sleep_for(std::chrono::seconds(1));  //当前线程暂停一秒 milliseconds microseconds nanoseconds
+std::this_thread::sleep_until();  //休眠至一个绝对时间
+std::this_thread::yield();  //主动让出当前线程的时间片
+
+thread t1(func, num);  //即便func函数声明时参数是引用方式 在线程执行完也不会影响到外部num 因为主线程的栈内num是以值拷贝的方式传入t1绑定的线程的栈内 如果非要影响主线程的num那么thread t1(func, std::ref(num));
+
+t1.~thread();  //不要写 这样会手动调用析构函数 t1对象在生命周期结束的时候会自动析构 手动析构会导致二次析构最终程序崩溃 同时对joinable的线程对象进行手动析构会导致调用std::terminate()程序崩溃
+```
+
+![](D:\Notebook\Assets\Photoes\6e542be6fab440738d4088b8eaddd469.png)
+
+![](D:\Notebook\Assets\Photoes\680413ee43884b2b8a4a96e9f4abe213.png)
+
+**注** printf 和 cout 都带锁 且 cout << "123" << "456"; 123输出完后释放锁 抢到锁456输出完后释放锁 一个printf()里的内容具有原子性 两个<<之间的内容具有原子性
+
+```
+//<mutex>  互斥量
+//互斥锁的必要性 已知各线程有自己独立的栈 但如全局变量等临界资源需保证线程安全
+
+//mutex互斥锁
+mutex mtx;  //声明互斥锁对象
+void Func(int n)
+{
+	while (n--)
+	{
+		mtx.lock();  // 加锁
+		g_val++;  //g_val是全局变量
+		mtx.unlock();  // 解锁
+	}
+}
+注：在while内进行加减锁为并行化 while外加减锁为串行化 一般并行化速度大于串行化 但如果对临界资源的操作简单频繁得加减锁反而会销耗过多时间
+//recursive_mutex递归互斥锁  用在递归加锁的场景
+mutex mtx;
+void func(int n){
+	if(n == 0) return 0;
+	mtx.lock();
+	n--; func(n);
+	mtx.unlock();
+}
+int main(){
+	int n = 1000;
+	thread t1(func, n); thread t2(func, n);
+	t1.join(); t2.join();
+	return 0;
+}  //这是一个普通mutex锁在递归场景下的情况 当第一次进入递归函数线程会拿到锁 之后第二次进入递归再一次申请锁 但此时锁并未释放所以会出现忙等 即死锁 此时使用recursive_mutex mtx;即可 它让线程在自己持有锁时不再申请锁
+//timed_mutex  可定时解锁
+//recursive_timed_mutex
+
+//**RAII(资源获取即初始化)风格的锁** 
+//lock_guard<mutex>
+mutex mtx;
+void func(int id){
+	lock_guard<mutex> lock(mtx);
+	cout << "Thread" << id << "is running." << endl;
+	if(id == 1) throw runtime_error("Thread 1 encountered an error!");  //如果是正常锁的话 此处执行完会直接跳到main函数的catch而不会执行mtx.unlock(); 但std::lock_guard<mutex>会在作用域结束时自动解锁
+}
+int main(){
+	try{
+		thread t1(func, 1); thread t2(func, 2);
+		t1.join(); t2.join();
+	} catch(const exception& e){
+		cerr << "Exception caught: " << e.what() << endl;
+	}
+	return 0;
+}
+//unique_lock<mutex>  有lock_guard<>的生命周期结束自动解锁 同时支持手动更灵活
+mutex mtx;
+void func(int n){
+	unique_lock<mutex> lock(mtx);  //加锁
+	...
+	lock.unlock();  //手动解锁
+	...
+	lock.lock();  //手动加锁
+}
+```
+
+```
+//<condition_variable>  条件变量(相比于互斥锁 cv用于解决同步问题)
+//mutex互斥锁可以阻塞等待 但有的时候我们可以允许不超过某数量的线程同时工作 那么就需要使用信号量
+condition_variable = cv;
+mutex mtx;
+unique_lock<mutex> lock(mtx);
+cv.wait(lock);  //使当前线程进入等待状态 直到被其他线程通过notify_one()或notify_all()函数唤醒 该方法调用时自动释放互斥锁并在被唤醒后重新获取互斥锁
+cv.wait_for(lock, time);  //返回时情况1被唤醒未超时 情况2超时返回timeout后自动唤醒
+cv.wait_until(lock,time);  //同上 但参数是绝对时间
+notify_one();  //选择一个等待中的线程唤醒
+notify_all();  //唤醒所有等待的线程 使它们从等待状态返回
+```
+

@@ -56,6 +56,8 @@ struct name{}s;  //顺带创建变量
 typedef struct name{}newname;  //创建别名  创建变量newname a;
 typedef struct{}name;  //本无名直接创建别名
 //c++ 无需typedef也可直接使用 结构体名 变量名 的形式创建单个变量
+
+注：c++中struct和class唯一的区别在于struct的成员默认访问权限是public class是private
 ```
 
 ##### lambda  (c++11及以上)
@@ -239,9 +241,62 @@ func(p);
 void func(int* p){}  //该函数中可以对指针指向地址的内容进行修改 但修改形参p的指向时 实参是不会跟着修改的 除非引用即int* &p
 ```
 
+##### 指针函数vs函数指针
+
+```
+//指针函数 返回值为指针
+void* func(){return nullptr;}
+//函数指针 指向函数在代码段中的地址
+int (*p) (int, int);  //p可指向一个返回int 参数为两个int的函数
+p = add;
+cout << p(1, 2) << endl;  //3
+```
+
 ##### VLA变长数组
 
 ```
 int a[n];  //形如此 n为变量 尽量用vector创建VLA
+```
+
+##### 预处理
+
+```
+//常见
+#include #define
+#undef  //取消宏定义
+#if  #ifdef  #ifndef  #else  #elif  #endif  //条件编译 根据条件选择保留或删除代码块
+#error  #warning  //在预处理阶段残生错误或警告
+#line  //修改编译器报错的行号
+#pragma  //向编译器传递特定指令 如优化、警告等
+#  //空指令 什么都不做 可用于排版
+```
+
+##### 类
+
+```
+struct声明类 默认访问权限为public
+struct MyClass{
+	void operator()(..., ...){}  //operator是运算符重载方法此处重载了()运算符
+};
+```
+
+##### 重载vs重写
+
+```
+//重载是同名函数 参数列表不同
+//重写是重新定义父类的方法 需保证函数名、参数、返回类型相同
+```
+
+##### main函数参数
+
+```
+//argc 命令行参数个数  argv[]数组每一个元素存一个字符串
+int main(int argc, char* argv[]){  //声明为char*更具可移植性
+	cout << "参数个数: " << argc << endl;
+    for (int i = 0; i < argc; i++) {
+        cout << "argv[" << i << "] = " << argv[i] << endl;  //此处argv[i]直接打印字符串而不是地址 是因为cout的<<运算符重载了很多参数类型 这里对于char*会调用直接输出字符串的运算符函数
+    }
+    return 0;
+}
 ```
 

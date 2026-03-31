@@ -51,7 +51,7 @@
 
 ```git stash```  //本地变化暂存
 
-```git push origin main```
+```git pull --rebase origin main```  //--rebase可减少重复merge提高git log可读性
 
 ```git stash pop```  //重新应用暂存变化
 
