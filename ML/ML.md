@@ -148,6 +148,8 @@ print("Test set score: {:.2f}".format(gnb.score(X_test, y_test)))
 
 #### 决策树
 
+######  DecisionTreeClassifier 分类算法
+
 ```
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
@@ -164,5 +166,20 @@ import graphviz
 with open("tree.dot") as f:  //打开.dot文件
 	dot_graph = f.read()
 graphviz.Source(dot_graph)
+print(tree.feature_importances_)  //输出特征重要性
+```
+
+###### DecisionTreeRegression 回归算法
+
+```
+//略
+//树模型做回归任务外推能力为零
+```
+
+#### 决策树集成
+
+###### 随机森林
+
+```
 ```
 
