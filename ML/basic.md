@@ -77,3 +77,10 @@ tuple(变量 for 变量 in 可迭代对象 if 条件)  //元组  (...) 被分配
 {n: v for n,v in zip(datas.target_names, np.bincount(datas.target))}
 ```
 
+##### bool 值规范
+
+```
+True  //not true
+False  //not false
+```
+

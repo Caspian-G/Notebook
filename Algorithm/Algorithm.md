@@ -124,4 +124,10 @@ int main(){
 
 
 
-**注** 注意栈pop时的取数先后顺序
+#### QuickSort
+
+```
+//这样声明参数能减少不必要麻烦
+void quickSort(//数组, int left, int right);
+```
+

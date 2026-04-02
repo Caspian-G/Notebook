@@ -300,3 +300,16 @@ int main(int argc, char* argv[]){  //声明为char*更具可移植性
 }
 ```
 
+##### cout 控制输出位数
+
+```
+cout << [fixed << ] setprecision(n) << (double)num << endl;  //加fixed控制小数位数 不加控制有效位数
+```
+
+##### sqrt vs pow
+
+```
+sqrt()  //专门求算术平方根
+pow()  //更灵活
+```
+

@@ -12,6 +12,8 @@ winget upgrade Microsoft.PowerShell --source winget
 
 ```
 dir  //扫文件夹
+D:  //转盘
+Remove-Item D:\DumpStack.log  //删除文件
 ```
 
 
