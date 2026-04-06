@@ -26,6 +26,10 @@ Remove-Item D:\DumpStack.log  //删除文件
 [start]  //启动  在新窗口中异步执行
 [pause]
 [exit]  //运行完退出父命令行(在cmd中运行.bat或提前退出.bat时生效 如果直接双击.bat运行完都会退出)
+
+cd /d  //需要/d
+start /B  //B可指定不启动新窗口
+start /b  //b可不指定新窗口 同时不阻塞后续运行
 ```
 
 **注** 如果使用.bat启动Ubuntu(wsl) call 后写 `wsl -d Ubuntu-22.04 --cd ~`
