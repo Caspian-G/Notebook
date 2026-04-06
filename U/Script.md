@@ -21,7 +21,7 @@ void start(){
 	transform.position = new Vector3(1, 2.5f, 3);  //初始化
 }
 transform.Translate(1.5f, 0, 0);  //position属性中 x-右 y-上 z-前 此处transform默认使用脚本绑定的对象坐标系而非世界坐标系
-transfrom.Translate(1.5f, 0, 0, Space.World);  //世界坐标轴
+transform.Translate(1.5f, 0, 0, Space.World);  //世界坐标轴
 transform.position += new Vector(1.5f, 0, 0);  //同上世界坐标轴
 ```
 
@@ -30,8 +30,8 @@ transform.position += new Vector(1.5f, 0, 0);  //同上世界坐标轴
 #### 输入
 
 ```
-float h = Input.GetAxis("horizontal");
-float v = Input.GetAxis("vertical");
+float h = Input.GetAxis("Horizontal");
+float v = Input.GetAxis("Vertical");
 ```
 
 #### 碰撞检测
