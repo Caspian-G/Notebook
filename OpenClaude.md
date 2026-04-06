@@ -30,12 +30,12 @@ ollama pull codegemma
 ```
 @echo off
 set OLLAMA_HOST=127.0.0.1:11435
-start /b ollama serve
+start /b ollama serve > nul 2>&1
 timeout /t 2 /nobreak >nul
-cd /d D:\Specific_Software\openclaude
+cd /d D:\Specific_Software\OpenClaude
 set CLAUDE_CODE_USE_OPENAI=1
-set OPENAI_BASE_URL=http://localhost:11434/v1
-set OPENAI_MODEL=deepseek-v3.1:671b-cloud
+set OPENAI_BASE_URL=http://localhost:11435/v1
+set OPENAI_MODEL=gemma4:e4b
 set OPENAI_API_KEY=ollama
 bun run dev
 pause
