@@ -309,7 +309,17 @@ cout << [fixed << ] setprecision(n) << (double)num << endl;  //加fixed控制小
 ##### sqrt vs pow
 
 ```
-sqrt()  //专门求算术平方根
+sqrt()  //专门求算术平方根  默认返回double类型
 pow()  //更灵活
 ```
+
+##### INF
+
+```
+#define INF 0x3f3f3f3f  //int(or 1e9)
+#define INF 4e18  //long long
+#define INF 1e300  //double
+```
+
+
 

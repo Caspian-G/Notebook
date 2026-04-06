@@ -181,5 +181,19 @@ print(tree.feature_importances_)  //输出特征重要性
 ###### 随机森林
 
 ```
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import make_moons
+from sklearn.model_selection import train_test_split
+X, y = make_moons(n_samples=100, noise=0.25, random_state=3)  //n_samples为样本数 noise为添加到数据中的高斯噪声标准差 random_state为随机数生成器的种子
+X_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y, random_state=42)
+forest = RandomForestClassifier(n_estimators=5, random_state=2)  //决策树数量为5 越大越易过拟合 可设置参数max_features调节单棵树的特征选择越大树与树之间越相似
+forest.fit(X_train, y_train)
+print(forest.score(X_train, y_train))
+print(forest.score(X_test, y_test))
+```
+
+###### 梯度提升回归树(梯度提升机)
+
+```
 ```
 
