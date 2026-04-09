@@ -321,5 +321,9 @@ pow()  //更灵活
 #define INF 1e300  //double
 ```
 
+##### GNU and GCC
 
+GNU项目为Linux提供编译器、链接器、调试器、编辑器、Shell 以及各类命令行工具在内的全套软件
+
+GCC是GNU中的编译器工具包  GCC本质上是通过调用cpp(预处理)、cc1(编译)、as(汇编)、ld(链接)这些子工具实现
 
