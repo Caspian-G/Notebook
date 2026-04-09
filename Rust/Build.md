@@ -65,7 +65,7 @@ cargo build  //安装依赖 Dev使用
 cargo build --release  //重度优化和去除无用代码 常在release分发时使用
 ```
 
-**注** cargo run 和 cargo build 都会调用 rustc
+**注** cargo run 和 cargo build 都会调用 rustc    cargo run 包含 cargo build
 
 #### 文档
 
