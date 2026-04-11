@@ -166,3 +166,6 @@ ProcessBuilder processBuilder = new ProcessBuilder("java", "--version");
 Process process = processBuilder.start();
 ```
 
+#### JSON
+
+json本质上是特定格式的字符串
