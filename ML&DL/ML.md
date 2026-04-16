@@ -195,5 +195,48 @@ print(forest.score(X_test, y_test))
 ###### 梯度提升回归树(梯度提升机)
 
 ```
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import load_breast_cancer
+cancer = load_breast_cancer()
+X_train, X_test, y_train, y_test = train_test_split(cancer.data, cancer.target, stratify=cancer.target, random_state=0)
+gbdt = GradientBoostingClassifier(random_state=0, max_depth=3, learning_rate=0.1, n_estimators=100)  //此处参数为默认值
+gbdt.fit(X_train, y_train)
+print("{:.3f}".format(gbdt.score(X_train, y_train)))
+print("{:.3f}".format(gbdt.score(X_test, y_test)))
+print(gbdt.feature_importances_)
+```
+
+**注** 对于大型数据集使用xgboost包训练速度更快
+
+#### 支持向量机
+
+###### 线性支持向量机
+
+```
+//略 详见上述线性模型
+```
+
+###### 非线性支持向量机 即核支持向量机
+
+```
+from sklearn.svm import SVC
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import load_breast_cancer
+cancer = load_breast_cancer()
+X_train, X_test, y_train, y_test = train_test_split(cancer.data, cancer.target, stratify=cancer.target, random_state=0)  //random_state为随机种子
+svc = SVC(kernel="rbf", C=10, gamma=0.1)  //此处选用高斯核，正则化C参数为10，gamma控制高斯核半径
+svc.fit(X_train, y_train)
+print("{:.3f}".format(svc.score(X_train, y_train)))
+print("{:.3f}".format(svc.score(X_test, y_test)))
+//输出1.000 0.629 过拟合的原因是SVM模型对参数和数据缩放非常敏感
+min_on_training = X_train.min(axis=0)
+range_on_training = (X_train - min_on_training).max(axis=0)
+X_train_scaled = (X_train - min_on_training)/range_on_training
+X_test_scaled = (X_test - min_on_training)/range_on_training
+svc.fit(X_train_scaled, y_train)
+print("{:.3f}".format(svc.score(X_train_scaled, y_train)))
+print("{:.3f}".format(svc.score(X_test_scaled, y_test)))
+//输出0.993 0.951 在对数据进行缩放后过拟合现象得到好转 值得注意的是我们在对数据进行缩放的时候可以精准控制训练集特征值为[0, 1]但测试集的数据可能会超出该范围
 ```
 

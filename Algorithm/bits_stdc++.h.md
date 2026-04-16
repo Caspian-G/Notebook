@@ -57,6 +57,15 @@ a.end();  //返回最后一个元素的后一个位置
 a.rbegin();  //返回最后一个元素的位置
 a.rend();  //返回第一个元素的前一个位置
 ```
+```
+//<queue>
+queue<T> que;
+que.empty();  //判空
+que.push();  //入队
+que.front();  //返回队首元素
+que.back();  //返回最后一个元素
+que.pop();  //移除一个元素
+```
 
 ```
 //<string>  不同于c标准库的<string.h>(包含一个string类) 
@@ -115,6 +124,12 @@ int i = stoi(s);  //字符串转整型
 string s = to_string(i);  //整型转字符串
 ```
 **注** c++ 中char时可以直接用==比较的 因为它存档是ASCII
+
+```
+//<cstring>
+memset(void* p, int value, size_t num);  //直接逐字节写入内存 如memset(arr, 0, sizeof(arr));
+注：除特定需求，不要将value设置为0或-1之外的数，因为逐字节填充而非按数据类型占内存大小
+```
 
 ```
 //<iostream>
