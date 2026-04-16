@@ -109,7 +109,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 cancer = load_breast_cancer()
 X_train, X_test, y_train, y_test = train_test_split(cancer.data, cancer.target, stratify=cancer.target, random_state=42)  //stratify用于确保训练集和测试集中的良性和恶性数据的比例和原数据集的target比例一致 避免出现训练集或测试集内数据出现全是恶性或全是良性的情况
-logreg = LogisticRegression(C=100, max_iter=10000, l1_ratio=1).fit(X_train, y_train)  //默认L2正则化 C越大系数约束越弱 max_iter设置最大迭代次数 l1_ratio=1可设置为L1正则化(需要修改solver求解器 默认lbfgs仅支持L2)
+logreg = LogisticRegression(C=100, max_iter=10000, l1_ratio=1).fit(X_train, y_train)  //默认L2正则化 C越大系数约束越弱 max_iter设置最大迭代次数 l1_ratio=1可设置为L1正则化(需要修改solver求解器 默认lbfgs仅支持L2) solver可用于设置求解最优w和b采用的优化算法
 print("Training set score: {:.2f}".format(logreg.score(X_train, y_train)))
 print("Test set score: {:.2f}".format(logreg.score(X_test, y_test)))
 import matplotlib.pyplot as plt
