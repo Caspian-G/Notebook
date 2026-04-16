@@ -1,3 +1,13 @@
+#### 损失函数优化算法
+
+###### 牛顿法
+
+![image-20260416202506509](D:\Notebook\Assets\Photoes\image-20260416202506509.png)
+
+###### 梯度下降法  (eta为"学习率")
+
+![image-20260416202614937](D:\Notebook\Assets\Photoes\image-20260416202614937.png)
+
 #### KNN
 
 ```
