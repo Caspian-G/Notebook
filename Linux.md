@@ -13,6 +13,7 @@
 pwd  //回显具体路径
 mkdir -p  //创建文件夹 -p允许递归创建多层
 cd  //跳转到路径
+cd ..  //退一层
 dir  //遍历文件夹
 rm  //删除文件  删除文件夹带上-r(递归删除)
 mv oldName(oldFolder) newName(newFolder)  //更改文件名(文件夹名) 或 移动文件(文件夹)
@@ -25,14 +26,32 @@ gcc --version
 
 wget https://...  //非互动式网络下载工具
 unzip ....zip  //解压.zip
+
+echo $?  //输出上一个程序的退出状态码
 ```
 
 #### Vim
+
+**保存并保持打开**  :w
+**另存为新文件**      :w 文件名
+**保存并退出**          :wq
+**强制保存并退出**  :wq! 
+**退出不保存**          :q!       
 
 ```
 vim ~/.bashrc  //打开环境变量配置文件
 //按o在当前行下方新开一行并进入插入模式
 //保存并退出 Esc + :wq
 source ~/.bashrc  //立即生效
+```
+
+~/.vimrc  配置vim
+
+```
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set number      " 顺便显示行号，写汇编和代码很方便
 ```
 
