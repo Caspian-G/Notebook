@@ -1,5 +1,7 @@
 #### MLP
 
+基于sklearn
+
 ```
 //多层感知机 普通前馈神经网络
 from sklearn.datasets import load_breast_cancer
@@ -21,5 +23,18 @@ mlp.fit(X_train_scaled, y_train)
 print("{:.3f}".format(mlp.score(X_train_scaled, y_train)))
 print("{:.3f}".format(mlp.score(X_test_scaled, y_test)))
 //数据集缩放后可显著提高精度 0.998 0.958
+
+//分析输入层与第一层隐层之间的权值
+import matplotlib.pyplot as plt
+plt.figure(figsize=(20, 5))
+plt.imshow(mlp.coefs_[0], interpolation="none", cmap="viridis")
+plt.yticks(range(30), cancer.feature_names)
+plt.xlabel("Cloums in weight matrix")
+plt.ylabel("Input feature")
+plt.colorbar()
+plt.savefig('mlp_weight_matrix.png', dpi=300, bbox_inches='tight')  //dpi分辨率(300为标准打印质量 600高质量打印) bbox_inches="tight"去除多余白边 
 ```
 
+![mlp_weight_matrix](D:\Notebook\Assets\Photoes\mlp_weight_matrix.png)
+
+**优化算法选择** "adam" 默认 需保证数据集均值为0方差为1                              			"lbfgs" 拟牛顿法变种 训练时长更长                                              			"sgd" 随机梯度下降法 参数更多更灵活

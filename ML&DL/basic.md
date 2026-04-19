@@ -84,3 +84,13 @@ True  //not true
 False  //not false
 ```
 
+##### from import  vs  import
+
+```
+from sklearn import datasets
+X, y = datasets.make_circles(...)  //使用时只需datasets
+
+import sklearn.datasets
+X, y = sklearn.datasets.make_circles(...)  //使用时需要sklearn.datasets
+```
+

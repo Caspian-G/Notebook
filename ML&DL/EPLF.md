@@ -13,7 +13,7 @@ import soccerdata as sd
 
 **注** soccerdata 会在C:\Users\下创建soccerdata文件夹相当于缓存数据库
 
-#### MatchHistory类
+##### MatchHistory类
 
 爬取网站 www.football-data.co.uk 易被反爬 不如手动下载高效
 
@@ -24,8 +24,9 @@ dataTemp = data.read_games()
 print(dataTemp.head(10))  //只看前10场
 ```
 
-#### FBref类
+**注** FBref 等类类似 具体查看官方文档
 
-```
-```
+#### 数据预处理
+
+##### 数据清洗
 

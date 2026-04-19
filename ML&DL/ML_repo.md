@@ -26,7 +26,7 @@ x = np.arange(0, 10, 2)  //[0 2 4 6 8]
 x = np.linspace(0, 1, 5)  //[0.0 0.25 0.5 0.75 1.0]
 //index
 x = x[1: 5]  //截取2到5个元素
-x = x[1, 2]  //获取2行3列元素  非传统x[][]
+x = x[1, 2]  //获取2行3列元素  非传统x[][]  此操作输出会降维
 x = x[[0, 2, 4]]  //花式索引 取索引为0 2 4的元素
 x = x[x > 5]  //布尔索引 过滤出所有数值大于5的元素
 //count
@@ -312,5 +312,26 @@ feature_names  list 					   特征列的名称
 target_names   list						   标签对应的类别名称
 DESCR          str						   描述
 filename	   str						   数据文件在本地的物理路径
+```
+
+###### sklearn.datasets
+
+```
+from sklearn import datasets
+
+//生成服从正态分布的聚类用数据集  默认三分类数据集
+X, y = datasets.make_blobs(n_samples=1000, n_features=2, centers=4, cluster_std=1.0, center_box=(-10.0, 10.0), shuffle=True, random_state=None)  //centers控制产生聚类簇的个数
+plt.scatter(X[:, 0], X[:, 1], c=y, s=8)  //可视化
+
+//生成同心圆数据集  默认二分类数据集
+X, y = datasets.make_circles(n_samples=10000, shuffle=True, noise=0.04, random_state=None, factor=0.8)  //noise控制属于同一个圈的样本点附加的漂移程度  factor控制内外圈的接近程度 越大越接近 上限为1
+plt.scatter(X[:, 0], X[:, 1], c=y, s=8)
+
+//生成模拟分类的数据集
+X, y = datasets.make_classification(n_samples=100, n_features=20, n_informative=2, n_redundant=2, n_repeated=0, n_classes=2, n_clusters_per_class=2, weights=None, flip_y=0.01, class_sep=1.0, hypercube=True, shift=0.0, scale=1.0, shuffle=True, random_state=None)
+
+//生成太极型非凸数据集  默认二分类数据集
+X, y = datasets.make_moons(n_samples=1000, shuffle=True, noise=0.05, random_state=None)
+plt.scatter(X[:, 0],X[:, 1], c=y, s=8)
 ```
 

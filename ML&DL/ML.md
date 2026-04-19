@@ -8,6 +8,8 @@
 
 ![image-20260416202614937](D:\Notebook\Assets\Photoes\image-20260416202614937.png)
 
+#### 注 以下全部基于scikit-learn机器学习库
+
 #### KNN
 
 ```
@@ -249,4 +251,10 @@ print("{:.3f}".format(svc.score(X_train_scaled, y_train)))
 print("{:.3f}".format(svc.score(X_test_scaled, y_test)))
 //输出0.993 0.951 在对数据进行缩放后过拟合现象得到好转 值得注意的是我们在对数据进行缩放的时候可以精准控制训练集特征值为[0, 1]但测试集的数据可能会超出该范围
 ```
+
+**注** .fit()会重置并使用新数据集训练
+
+#### 分类器的不确定度估计
+
+即 预测的置信程度(置信程度不等于置信区间)
 
