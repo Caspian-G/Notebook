@@ -258,3 +258,104 @@ print("{:.3f}".format(svc.score(X_test_scaled, y_test)))
 
 即 预测的置信程度(置信程度不等于置信区间)
 
+##### 二分类问题
+
+###### decision_function 决策函数
+
+```
+from sklearn.datasets import make_circles
+import numpy as np
+X, y = make_circles(noise=0.25, factor=0.5, random_state=1)
+y_named = np.array(["blue", "red"])[y]  //数组索引映射 将y的二分类值改名为0->"blue" 1->"red"
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train_named, y_test_named, y_train, y_test = train_test_split(X, y_named, y, random_state=0)
+from sklearn.ensemble import GradientBoostingClassifier
+gbdt = GradientBoostingClassifier(random_state=0)
+gbdt.fit(X_train, y_train_named)
+print("X_test.shape: {}".format(X_test.shape) )
+print("Decision Function shape: {}".format(gbdt.decision_function(X_test).shape))
+//X_test.shape: (25, 2)
+//Decision Function shape: (25,)
+//对于二分类问题 类别1为反类类别2为正类 决策函数的输出对于正类的正值置信程度浮点数和对于反类的复值置信程度浮点数
+print(gbdt.decision_function(X_test)[:6])
+print(gbdt.predict(X_test)[:6])
+//[ 4.13592603 -1.70169917 -3.95106099 -3.62609552  4.28986642  3.66166081]
+//['red' 'blue' 'blue' 'blue' 'red' 'red']
+//以下是一些无关紧要的验证决策函数正负值与预测值的匹配
+//greater_zero = (gbdt.decision_function(X_test) > 0).astype(int)
+//print(greater_zero)
+//pred = gbdt.classes_[greater_zero]
+//print(pred)
+//print(np.all(pred == gbdt.predict(X_test)))
+```
+
+**注** decision_function会根据数据与模型参数输出任意范围的值 导致输出往往难以解释
+
+###### predict_proba 预测概率
+
+```
+from sklearn.datasets import make_circles
+import numpy as np
+X, y = make_circles(noise=0.25, factor=0.5, random_state=1)
+y_named = np.array(["blue", "red"])[y]
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train_named, y_test_named, y_train, y_test = train_test_split(X, y_named, y, random_state=0)
+from sklearn.ensemble import GradientBoostingClassifier
+gbdt = GradientBoostingClassifier(random_state=0)
+gbdt.fit(X_train, y_train_named)
+print("X_test.shape: {}".format(X_test.shape) )
+print("predict_proba shape: {}".format(gbdt.predict_proba(X_test).shape))
+//X_test.shape: (25, 2)
+//predict_proba shape: (25, 2)
+//对于二分类问题 predict_proba始终输出(n, 2)
+print(gbdt.predict_proba(X_test)[:6])
+//[[0.01573626 0.98426374]
+ [0.84575653 0.15424347]
+ [0.98112869 0.01887131]
+ [0.97407033 0.02592967]
+ [0.01352142 0.98647858]
+ [0.02504637 0.97495363]]
+//超过50%的那个类别就是预测结果
+print(gbdt.predict(X_test)[:6])
+```
+
+**注** 如果模型给出的不确定度符合实际情况 那么该模型被称为校正模型 对于校正模型 其每个样本微观的平均概率与实际宏观预测概率相符
+
+##### 多分类问题
+
+###### desicion_function
+
+```
+from sklearn.datasets import load_iris
+iris = load_iris()
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, random_state=42)
+from sklearn.ensemble import GradientBoostingClassifier
+gbdt = GradientBoostingClassifier(random_state=0)
+gbdt.fit(X_train, y_train)
+print(gbdt.decision_function(X_test)[:6])
+//对于多分类问题 决策函数输出shape为(n_samples, n_classes)
+//[[-6.97579793  2.7731495  -4.75421757]
+ [ 7.33907949 -1.67857649 -5.37584532]
+ [-6.95427555 -4.89666235  5.17701743]
+ [-6.97579793  3.29727516 -4.16277348]
+ [-7.00127248  3.55733893 -4.12002376]
+ [ 7.33830717 -2.11593521 -5.37584532]]
+//每一列对应该类别确定度分数 最大的值对应的类别即为预测的类别 上述确定度分数矩阵对应类别为[1 0 2 1 1 0]
+```
+
+###### predict_proba
+
+```
+print(gbdt.predict_proba(X_test)[:6])
+print(gbdt.predict_proba(X_test)[:6].sum(axis=1))
+//预测概率的输出shape也是(n_samples, n_classes) 每列含义与二分类相同 每行各值求和依旧是1
+//[[5.83212665e-05 9.99403846e-01 5.37832493e-04]
+ [9.99875760e-01 1.21234942e-04 3.00555277e-06]
+ [5.38797716e-06 4.21731268e-05 9.99952439e-01]
+ [3.45299643e-05 9.99390193e-01 5.75277148e-04]
+ [2.59561895e-05 9.99511075e-01 4.62968410e-04]
+ [9.99918642e-01 7.83500666e-05 3.00800390e-06]]
+//[1. 1. 1. 1. 1. 1.]
+```
+

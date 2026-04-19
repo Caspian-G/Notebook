@@ -61,6 +61,9 @@ np.bincount(x)
 x = np.array([0, 1, 1, 3, 2, 1, 7])
 bins = np.bincount(x)  //统计0-7每个数字出现的次数 会自动识别范围若x = np.array(["a", "a", "a", "b", "b"])则会统计a、b的出现次数
 print(bins)  //输出[1 3 1 1 0 0 0 1]
+
+//控制np的打印格式
+np.set_printoptions(precision=3, suppress=False)  //保留小数点后3位 suppress设置是否强制禁用科学计数法
 ```
 
 #### SciPy
@@ -278,7 +281,7 @@ display(data_pandas[data_pandas.Age > 19])  //条件输出
 
 ```
 包含机器学习相关的算法实现和工程应用
-from sklearn import preprocessing  //数据预处理 特征工程
+from sklearn import preprocessing  //特征工程
 from sklearn import feature_selection  //特征选择
 from sklearn import ...  //模型算法 分别在各自类中实现 统称Estimator类
 	如K近邻分类算法 fromsklearn.neighbors import KNeighborsClassifier
