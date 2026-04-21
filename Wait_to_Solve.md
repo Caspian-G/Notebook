@@ -1,7 +1,5 @@
 ioc di aop pojo
 
-git 批处理
-
 java匿名类
 
 状态机  垃圾回收机制
