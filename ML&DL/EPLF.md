@@ -30,3 +30,12 @@ print(dataTemp.head(10))  //只看前10场
 
 ##### 数据清洗
 
+缺失值处理  采用上赛季数据或本赛季全联盟的平均数据
+
+异常值处理
+
+数据整合
+
+数据变换  标准化 归一化 (数据缩放)  StandardScaler, MinMaxScaler, RobustScaler
+
+特征工程  特征选择 构造新特征 

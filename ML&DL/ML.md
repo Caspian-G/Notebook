@@ -128,7 +128,7 @@ import matplotlib.pyplot as plt
 plt.plot(logreg.coef_.T, "o")  //此行代码可查看各系数点的值分布 转置是因为logreg.coef_的形状是1行n列即[[..., ...]]而不是[[...], [...], ...] 不转置plot方法会以为x轴只有一个0值
 ```
 
-###### LinearSVM(分类算法)
+###### LinearSVC(分类算法)
 
 ```
 from sklearn.datasets import load_breast_cancer

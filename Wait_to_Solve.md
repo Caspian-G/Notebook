@@ -56,23 +56,21 @@ session
 
 包含主客场优势联赛排名 状态如果使用时间序列则需要引入时间衰减权重 引入分时模型群之前研究一下二重预测提高还是降低预测结果二重预测时需保留哪些特征
 
-shap 置信程度
-
 独立和双变量泊松模型
 
+标记分类特征 training_data['裁判名'] = training_data['裁判名'].astype('category') 
+
+model = xgb.XGBClassifier( **enable_categorical=True**, n_estimators=100, random_state=42 )
 
 
-球队历史表现特征
-
-球员个人能力特征
-
-战术风格特征
-
-比赛环境特征
 
 社交媒体特征
 
-高阶统计特征（xG, EPV等）
+
+
+引入临场赔率
+
+引入赛中数据 赛中比分
 
 
 
