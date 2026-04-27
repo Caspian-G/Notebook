@@ -62,9 +62,7 @@ session
 
 model = xgb.XGBClassifier( **enable_categorical=True**, n_estimators=100, random_state=42 )
 
-
-
-社交媒体特征
+调参
 
 
 
