@@ -27,6 +27,7 @@ rustc --version  //rust编译器
 cargo --version  //rust的编译管理器、包管理器和通用工具 使用cargo会调用rustc
 rustdoc  --version  //rust的文档工具
 rustup toolchain list  //查看链接器
+rustfmt  --version  //代码格式化工具 自动规范代码风格
 ```
 
 ##### 配置Cargo 使用GNU工具链
@@ -56,6 +57,9 @@ cargo run --release  //重度优化和去除无用代码并运行
 ```
 [dependencies]
 ferris-says = "0.3.1"  //示例
+//或
+cargo add ferris-says@0.3.1
+cargo remove ferris-says  //去除依赖引用 实际库缓存还在c盘
 ```
 
 **注** Cargo.lock记载本地项目以及依赖的版本号
@@ -63,6 +67,8 @@ ferris-says = "0.3.1"  //示例
 ```
 cargo build  //安装依赖 Dev使用
 cargo build --release  //重度优化和去除无用代码 常在release分发时使用
+
+cargo clean  //清空中间编译产物
 ```
 
 **注** cargo run 和 cargo build 都会调用 rustc    cargo run 包含 cargo build
@@ -70,4 +76,10 @@ cargo build --release  //重度优化和去除无用代码 常在release分发�
 #### 文档
 
 [Rust相关文档](https://www.rust-lang.org/zh-CN/learn)
+
+#### 快速检查代码语法错误 (不生成可执行文件)
+
+```
+cargo check
+```
 

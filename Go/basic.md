@@ -12,7 +12,7 @@ go version
 go1.16之后使用go module模式进行项目布局
 
 ```
-go mod init <模块名>     //初始化模块/项目
+go mod init <模块名>     //初始化模块/项目 运行后会在模块下创建一个go.mod文件
 go mod tidy             //下载依赖
 ```
 
