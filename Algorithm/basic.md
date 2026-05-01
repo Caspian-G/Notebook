@@ -67,6 +67,8 @@ typedef struct{}name;  //本无名直接创建别名
 注：c++中struct和class唯一的区别在于struct的成员默认访问权限是public class是private
 ```
 
+**注** 尽量让struct被声明到栈上而不是堆
+
 ##### lambda  (c++11及以上)
 
 ```
