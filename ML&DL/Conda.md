@@ -47,3 +47,7 @@ Github下载.exe+安装+设置环境变量+cmd:conda init
 **注** 上述init过程conda可能会自动生成profile.ps1文件 这个配置文件可以让powershell每次启动自动加载conda环境但我们必须给文件操作powershell的权限 `Set-ExecutionPolicy RemoteSigned`
 
 **注** 当conda上没有要的包用pip
+
+
+
+**注** conda create 默认下载random、os等库，且conda list查看的是conda或pip下载的第三方库

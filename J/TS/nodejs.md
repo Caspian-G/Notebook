@@ -39,7 +39,7 @@ npm config set registry https://registry.npmmirror.com/
 #### TS
 
 ```
-//-g指全局安装 安装在nodejs文件夹下的node_modules 无-g则指项目安装 仅安装在
+//-g指全局安装 安装在nodejs文件夹下的node_modules 无-g则指项目安装 仅安装为项目依赖
 npm install -g typescript
 tsc --init  //初始化tsconfig.json
 
@@ -102,3 +102,44 @@ node .\dist\main.js
 }
 ```
 
+
+
+#### Electron
+
+需安装至项目依赖 最终不应打包进应用即开发依赖(--save-dev)
+
+```
+npm install electron --save-dev
+npm install typescript --save-dev  //安装为开发项目依赖易于管理版本
+```
+
+###### package.json
+
+```
+{
+  "devDependencies": {
+    "electron": "^42.1.0",
+    "rimraf": "^6.1.3",
+    "typescript": "^6.0.3"
+  },
+  //定义 npm run ... 命令
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
+    "start": "npm run clean && tsc && electron ."
+  },
+  "main": "dist\\main.js"
+}
+```
+
+定义完上述.json即可
+
+```
+npm run start 运行项目
+//或不定义换用npx临时使用本地依赖或联网使用一次依赖(用完即删) 即
+//npx rimraf dist
+//npx tsc
+//npx electron .
+```
+
+**注** 安装electron空壳问题 step1 手动下载https://registry.npmmirror.com/-/binary/electron/42.1.0/electron-v42.1.0-win32-x64.zip step2 解压至项目node_module\\electron\\dist下 step3 node_module\electron下创建path.txt写入electron.exe
